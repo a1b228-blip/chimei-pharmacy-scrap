@@ -3,21 +3,30 @@
 > 任何 Agent、任何電腦接手前**必讀**；收工時**必更新**。本檔只放交接必需的精簡資訊，詳細脈絡放 Obsidian（若有 L3）。
 
 ## ⏯️ 目前做到哪
-專案初始化完成。已完成 L1 本地藍圖（`AGENTS.md`、`handoff.md`）與 L3 Obsidian 第二大腦專案工作流程筆記之建置。
+完成微軟醫療自動化三神器（Power Apps + Power Automate + SharePoint）之本地工具鏈與 MCP 伺服器建置：
+1. 配置 .NET 10 SDK（macOS arm64）。
+2. 安裝微軟官方 Power Platform CLI (`pac` v2.12.2)，支援 `pac canvas`（解包/打包 .msapp）與 `pac power-automate`（雲端流程檢視與執行）。
+3. 安裝微軟官方 `CanvasAuthoringMcpServer` (v1.1.5) 與 `powerplatform-mcp` 全域套件。
+4. 全域 MCP 設定檔（`~/.gemini/config/mcp_config.json`）已完成登錄並同步至 Chezmoi。
 
 ## 🚦 目前狀態
-專案基礎建設已就緒，等待使用者提供進一步需求（例如報廢流程具體項目、表單格式、管制藥或一般藥品規範、自動化腳本或網頁需求等）。
+工具鏈與 MCP 伺服器已就緒。可隨時進行：
+- 本地 `.msapp` 畫布應用程式解包、原始碼分析、Power Fx 編輯與重打包。
+- Power Automate 雲端流程診斷與設計。
+- SharePoint 清單結構對齊與連線。
 
 ## ➡️ 下一步
-1. 訪談並釐清報廢流程的具體規範與表單需求（可依需求搭配 RDQ 需求訪談）。
-2. 確認是否有既有的 Excel、Word 或紙本報廢表單範本。
-3. 規劃流程表架構或開發對應工具。
+1. 請使用者將現有已製作部分的 Power App 匯出為 `.msapp` 檔案，放置於本專案資料夾中。
+2. 透過 `pac canvas unpack` 解包為 YAML / Power Fx 原始碼。
+3. 梳理報廢流程各節點（申請、藥庫/主管審核、管制藥會驗、狀態變更、Teams 自動化推播）。
+4. 由 Agent 補全 Power Apps 前端畫面邏輯與 Power Automate 流程設定。
 
 ## ⚠️ 注意事項
-- 本台電腦無 `gh` (GitHub CLI)，目前未建立 GitHub 遠端版本庫。本地已進行 git init 追蹤。
-- 所有輸出與文件遵循台灣繁體中文與空格排版規範。
+- 執行 `pac` 指令前需確認環境變數 `DOTNET_ROOT="$HOME/.dotnet"`（已寫入 `~/.zprofile` 與 `~/.zshrc`）。
+- 本專案路徑為 `/Users/jiangruiyi/Documents/antigravity/藥劑科報廢流程表`，保持獨立專案運作。
+- 後端資料採用 SharePoint List，於 Teams 頻道發布無需購買 Power Apps Premium 進階授權。
 
 ## 🕐 最後更新
-- 時間：2026-09-11 21:24
+- 時間：2026-09-11 21:50
 - 更新者：Google Antigravity @ jiangruiyideMacBook-Air.local
 - Git push：—（本專案未啟用遠端 git repo）

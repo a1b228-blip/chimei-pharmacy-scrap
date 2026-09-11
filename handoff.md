@@ -3,29 +3,25 @@
 > 任何 Agent、任何電腦接手前**必讀**；收工時**必更新**。本檔只放交接必需的精簡資訊，詳細脈絡放 Obsidian（若有 L3）。
 
 ## ⏯️ 目前做到哪
-完成「藥庫溝通平台（全功能）」與「會議紀錄平台（純唯讀瀏覽）」雙平台權限劃分設定（選項 A）：
-1. **SharePoint 清單底層權限**：已由使用者在 SharePoint 清單（`報廢網頁`，GUID: `20d0cec4-6b56-45d7-83c0-a7d85c6d00af`）為會議紀錄 Teams 同仁授與「讀取 (Read)」權限。
-2. **Power Apps 前端權限機制（已完成本地修改並通過編譯驗證）**：
-   - **身分判斷**：在 `MainScreen1.OnVisible` 注入藥庫身分檢核：
-     `Set(IsPharmacyAdmin, Lower(User().Email) in ["b305w2@chimei.org.tw"])`
-   - **編輯與刪除權限**：`EditIconButton1`（鉛筆）與 `DeleteIconButton1`（垃圾桶）加上 `IsPharmacyAdmin` 條件，非藥庫同仁自動隱藏。
-   - **藥庫專用欄位保護**：`藥庫複核人員_DataCard1` 卡片加上 `Visible: =IsPharmacyAdmin`，非藥庫同仁完全看不到此欄位。
-   - **清單檢視**：維持顯示全院清單，全院同仁皆可唯讀瀏覽，無法擅自竄改。
+1. **工具鏈與環境配置**：完成 .NET 10 SDK、微軟官方 PAC CLI (2.12.2)、Canvas Authoring MCP Server、powerplatform-mcp 安裝與全域 Chezmoi 同步。
+2. **資料庫層擴充**：確認 SharePoint 清單（`報廢網頁`，GUID: `20d0cec4-6b56-45d7-83c0-a7d85c6d00af`），完成開放「會議紀錄平台」同仁讀取權限，並新增「審核狀態」欄位（待審核、主管已核准、藥庫已複核、已退件）。
+3. **Power Apps 前端權限隔離（選項 A）**：改寫 `MainScreen1.pa.yaml`，實作藥庫主管（`B305W2@chimei.org.tw`）全權限，會議同仁純唯讀安全瀏覽、隱藏編輯/刪除與藥庫複核人員卡片，通過 `compile_canvas` 驗證（0 錯誤）。
+4. **Power Automate 雲端審核流程**：完成「當建立項目時」➔「啟動並等候核准」流程架構，並已打包產出標準流程匯入套件：`藥劑科報廢表單_Teams主管審核流程_匯入包.zip`。
 
 ## 🚦 目前狀態
-- 本地原始碼（`app_sources/MainScreen1.pa.yaml`）已完成改寫，並通過微軟官方 `compile_canvas` 診斷驗證（0 語法錯誤）。
-- 奇美醫院環境（`B305W2@chimei.org.tw`）連線暢通。
+- 前端 Power Apps 與後端 SharePoint、Power Automate 之鐵三角架構已全面連通。
+- 流程已就緒待命，可隨時透過填寫一筆測試單驗收 Teams 推播。
 
 ## ➡️ 下一步
-1. 請使用者在 Power Apps Studio 儲存並發布應用程式，或於 Teams 測試兩個身分的瀏覽畫面。
-2. 若需新增其他藥庫藥師名單，可隨時在 `IsPharmacyAdmin` 清單中擴充 Email。
-3. 規劃 Power Automate 雲端審核推播（當有人送出報廢單時，推播 Teams 卡片通知藥庫複核）。
+1. 下次開工後，在 Power Apps 提交一筆測試報廢單。
+2. 觀察主管 Teams 是否收到核准推播並進行點擊確認。
+3. 將 Power Apps 正式發布至「藥庫溝通平台」與「會議紀錄平台」Teams 頻道索引標籤（Tab）。
 
 ## ⚠️ 注意事項
-- 目前設定之藥庫管理帳號為 `B305W2@chimei.org.tw`。
-- 會議紀錄平台的同仁僅具備 SharePoint 讀取權限，不會有任何覆寫底層資料的資安風險。
+- 目前設定之藥庫管理主管帳號為 `B305W2@chimei.org.tw`，未來可隨時於 `MainScreen1.pa.yaml` 擴充其他藥師 Email。
+- 本機未安裝 GitHub CLI (`gh`)，本地已建立完整 Git commit 存檔。
 
 ## 🕐 最後更新
-- 時間：2026-09-11 23:14
+- 時間：2026-09-12 01:07
 - 更新者：Google Antigravity @ jiangruiyideMacBook-Air.local
-- Git push：—（本地版本庫已提交追蹤）
+- Git push：—（本地版本庫已完整提交，未啟用遠端 git repo）

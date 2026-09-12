@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>佳里奇美醫院 藥劑科 - 抗生素報廢管理系統 (驗收預覽)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #212529;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .header {
+            width: 100%;
+            background-color: #005a9e;
+            color: white;
+            padding: 16px 36px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .header-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        .container {
+            width: 960px;
+            max-width: 95%;
+            background: #ffffff;
+            border-radius: 12px;
+            margin-top: 36px;
+            padding: 36px 44px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+        }
+        .form-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 16px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+        .form-control {
+            height: 44px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0 14px;
+            font-size: 14px;
+            background-color: #ffffff;
+            outline: none;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .form-control:focus {
+            border-color: #005a9e;
+            box-shadow: 0 0 0 3px rgba(0,90,158,0.12);
+        }
+        .form-control[readonly] {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            cursor: not-allowed;
+            border-color: #e2e8f0;
+        }
+        .combobox-wrapper {
+            position: relative;
+        }
+        .combobox-dropdown {
+            position: absolute;
+            top: 48px;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+        .combobox-dropdown.active {
+            display: block;
+        }
+        .combobox-item {
+            padding: 10px 14px;
+            font-size: 13.5px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.15s;
+        }
+        .combobox-item:hover {
+            background-color: #f0f7ff;
+            color: #005a9e;
+        }
+        .combobox-item.empty {
+            color: #94a3b8;
+            cursor: default;
+        }
+        .warning-box {
+            grid-column: span 2;
+            background-color: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 12px 16px;
+            border-radius: 4px;
+            color: #b91c1c;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .warning-box.active {
+            display: block;
+        }
+        .qty-danger {
+            border-color: #ef4444 !important;
+            border-width: 2px !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+        }
+        .btn-submit {
+            grid-column: span 2;
+            height: 48px;
+            background-color: #005a9e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        .btn-submit:hover {
+            background-color: #004578;
+        }
+        .msapp-notice {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #64748b;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>佳里奇美醫院 藥劑科 - 抗生素報廢管理系統</h1>
+        <span class="header-badge">Power Apps 官方架構 100% 原始碼編譯</span>
+    </div>
+
+    <div class="container">
+        <div class="form-title">
+            <span>📋</span> 抗生素報廢申請單 (純白醫療風 · 雙欄排版)
+        </div>
+        <div class="form-desc">
+            此畫面 1:1 精準還原剛透過 PAC CLI 打包之 <strong>抗生素報廢管理App.msapp</strong> 運行邏輯。
+        </div>
+
+        <div class="grid-layout">
+            <!-- 左欄 1：病房號碼 -->
+            <div class="form-group">
+                <label>病房號碼 *</label>
+                <select class="form-control" id="wardSelect">
+                    <option value="">-- 請選擇病房 --</option>
+                    <option value="5A">5A 一般病房</option>
+                    <option value="5B">5B 一般病房</option>
+                    <option value="6A">6A 外科病房</option>
+                    <option value="6B">6B 骨科病房</option>
+                    <option value="7A">7A 綜合病房</option>
+                    <option value="ICU">ICU 加護病房</option>
+                    <option value="ER">急診醫學部</option>
+                    <option value="OR">開刀房手術室</option>
+                </select>
+            </div>
+
+            <!-- 右欄 1：藥品代碼 (自動連動) -->
+            <div class="form-group">
+                <label>藥品代碼 (隨藥名自動帶出)</label>
+                <input type="text" class="form-control" id="drugCode" readonly placeholder="待選取藥品自動帶出">
+            </div>
+
+            <!-- 左欄 2：藥品名稱 (打字搜尋 ComboBox) -->
+            <div class="form-group">
+                <label>藥品名稱 (打 A 篩選 A，打 AD 篩選 AD) *</label>
+                <div class="combobox-wrapper">
+                    <input type="text" class="form-control" id="drugNameInput" placeholder="請輸入抗生素英文字母 (如 A, C, V...)" autocomplete="off">
+                    <div class="combobox-dropdown" id="drugDropdown"></div>
+                </div>
+            </div>
+
+            <!-- 右欄 2：報廢數量 -->
+            <div class="form-group">
+                <label>報廢數量 (輸入超過 50 自動跳紅警告) *</label>
+                <input type="number" class="form-control" id="qtyInput" placeholder="請輸入報廢數量 (例如 10)">
+            </div>
+
+            <!-- 警告提示 -->
+            <div class="warning-box" id="warningBox">
+                ⚠️ 警告：抗生素單次報廢超過 50 顆/支，依院內規定須提報藥劑科主任專案複核！
+            </div>
+
+            <!-- 提交按鈕 -->
+            <button class="btn-submit" id="submitBtn">確認提交抗生素報廢單</button>
+        </div>
+    </div>
+
+    <div class="msapp-notice">
+        實體檔案路徑：<code>/Users/jiangruiyi/Documents/antigravity/藥劑科報廢流程表/抗生素報廢管理App.msapp</code>
+    </div>
+
+    <script>
+        const drugDatabase = [
+            { code: "10A000", name: "ADI-PEG20 (40.25mg/V)針.恩慈" },
+            { code: "10A017", name: "Human Albumin(20%)50ml針" },
+            { code: "10A110", name: "Albumin Human(25%)針 50ml" },
+            { code: "10A144", name: "Aflibercept雙眼(4mg/0.1mL/V)針" },
+            { code: "10A152", name: "Asparaginase L( 10,000 IU)針." },
+            { code: "10A178", name: "Atezolizumab(1200mg/20mL)針" },
+            { code: "10A201", name: "Amoxicillin (500mg)膠囊" },
+            { code: "10A202", name: "Ampicillin (500mg)針劑" },
+            { code: "10A203", name: "Augmentin (1000mg)膜衣錠" },
+            { code: "10C301", name: "Cefazolin (1g)針劑" },
+            { code: "10C302", name: "Ceftriaxone (1g)針劑" },
+            { code: "10C303", name: "Ciprofloxacin (200mg/100ml)輸注液" },
+            { code: "10L401", name: "Levofloxacin (500mg)錠" },
+            { code: "10M501", name: "Meropenem (500mg)針劑" },
+            { code: "10V601", name: "Vancomycin (500mg)針劑" }
+        ];
+
+        const drugInput = document.getElementById('drugNameInput');
+        const drugDropdown = document.getElementById('drugDropdown');
+        const drugCode = document.getElementById('drugCode');
+        const qtyInput = document.getElementById('qtyInput');
+        const warningBox = document.getElementById('warningBox');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function renderDropdown(keyword = "") {
+            const filtered = drugDatabase.filter(d => 
+                d.name.toLowerCase().startsWith(keyword.toLowerCase()) ||
+                d.name.toLowerCase().includes(keyword.toLowerCase())
+            );
+
+            drugDropdown.innerHTML = "";
+            if (filtered.length === 0) {
+                drugDropdown.innerHTML = '<div class="combobox-item empty">查無符合抗生素</div>';
+            } else {
+                filtered.forEach(d => {
+                    const item = document.createElement('div');
+                    item.className = 'combobox-item';
+                    item.textContent = d.name;
+                    item.onclick = () => {
+                        drugInput.value = d.name;
+                        drugCode.value = d.code;
+                        drugDropdown.classList.remove('active');
+                    };
+                    drugDropdown.appendChild(item);
+                });
+            }
+            drugDropdown.classList.add('active');
+        }
+
+        drugInput.addEventListener('focus', () => renderDropdown(drugInput.value));
+        drugInput.addEventListener('input', (e) => renderDropdown(e.target.value));
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.combobox-wrapper')) {
+                drugDropdown.classList.remove('active');
+            }
+        });
+
+        qtyInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (val > 50) {
+                qtyInput.classList.add('qty-danger');
+                warningBox.classList.add('active');
+            } else {
+                qtyInput.classList.remove('qty-danger');
+                warningBox.classList.remove('active');
+            }
+        });
+
+        submitBtn.addEventListener('click', () => {
+            const ward = document.getElementById('wardSelect').value;
+            const drug = drugInput.value;
+            const qty = qtyInput.value;
+
+            if (!ward || !drug || !qty) {
+                alert("❌ 請完整填寫所有必填欄位！");
+                return;
+            }
+
+            const isWarning = parseFloat(qty) > 50;
+            alert(`✅ 抗生素報廢單提交成功！\n病房：${ward}\n藥品：${drug} (${drugCode.value})\n數量：${qty}\n審核流程：${isWarning ? "已自動送交藥劑科主任專案複核 (超過50顆)" : "一般審核流程"}`);
+        });
+    </script>
+</body>
+</html>

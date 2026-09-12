@@ -1,0 +1,24 @@
+{
+  "d260de66-9fa9-404b-9712-7dfba88aeace": {
+    "connectionRef": {
+      "displayName": "SharePoint",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1827/1.0.1827.4913/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline"
+    },
+    "datasets": {
+      "https://cmh2400.sharepoint.com/sites/msteams_d944ec": {
+        "dataSources": {
+          "報廢網頁": {
+            "tableName": "20d0cec4-6b56-45d7-83c0-a7d85c6d00af"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "報廢網頁"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "d260de66-9fa9-404b-9712-7dfba88aeace"
+  }
+}

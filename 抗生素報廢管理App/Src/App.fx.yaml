@@ -1,0 +1,31 @@
+App As appinfo:
+    BackEnabled: =true
+    Theme: =PowerAppsTheme
+    OnStart: |-
+        =ClearCollect(
+            colAntibiotics,
+            Table(
+                { 藥號: "10A000", 藥品名稱: "ADI-PEG20 (40.25mg/V)針.恩慈" },
+                { 藥號: "10A017", 藥品名稱: "Human Albumin(20%)50ml針" },
+                { 藥號: "10A110", 藥品名稱: "Albumin Human(25%)針 50ml" },
+                { 藥號: "10A144", 藥品名稱: "Aflibercept雙眼(4mg/0.1mL/V)針" },
+                { 藥號: "10A152", 藥品名稱: "Asparaginase L( 10,000 IU)針." },
+                { 藥號: "10A178", 藥品名稱: "Atezolizumab(1200mg/20mL)針" },
+                { 藥號: "10A201", 藥品名稱: "Amoxicillin (500mg)膠囊" },
+                { 藥號: "10A202", 藥品名稱: "Ampicillin (500mg)針劑" },
+                { 藥號: "10A203", 藥品名稱: "Augmentin (1000mg)膜衣錠" },
+                { 藥號: "10C301", 藥品名稱: "Cefazolin (1g)針劑" },
+                { 藥號: "10C302", 藥品名稱: "Ceftriaxone (1g)針劑" },
+                { 藥號: "10C303", 藥品名稱: "Ciprofloxacin (200mg/100ml)輸注液" },
+                { 藥號: "10L401", 藥品名稱: "Levofloxacin (500mg)錠" },
+                { 藥號: "10M501", 藥品名稱: "Meropenem (500mg)針劑" },
+                { 藥號: "10V601", 藥品名稱: "Vancomycin (500mg)針劑" }
+            )
+        )
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false

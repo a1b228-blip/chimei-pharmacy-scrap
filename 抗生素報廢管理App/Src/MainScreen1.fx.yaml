@@ -1,0 +1,242 @@
+"MainScreen1 As screen.'copilotAppSinglePage_ver1.0'":
+    Fill: =RGBA(245, 247, 250, 1)
+    LoadingSpinnerColor: =RGBA(0, 90, 158, 1)
+    OnVisible: |-
+        =If(IsEmpty(colAntibiotics),
+            ClearCollect(
+                colAntibiotics,
+                Table(
+                    { 藥號: "10A000", 藥品名稱: "ADI-PEG20 (40.25mg/V)針.恩慈" },
+                    { 藥號: "10A017", 藥品名稱: "Human Albumin(20%)50ml針" },
+                    { 藥號: "10A110", 藥品名稱: "Albumin Human(25%)針 50ml" },
+                    { 藥號: "10A144", 藥品名稱: "Aflibercept雙眼(4mg/0.1mL/V)針" },
+                    { 藥號: "10A152", 藥品名稱: "Asparaginase L( 10,000 IU)針." },
+                    { 藥號: "10A178", 藥品名稱: "Atezolizumab(1200mg/20mL)針" },
+                    { 藥號: "10A201", 藥品名稱: "Amoxicillin (500mg)膠囊" },
+                    { 藥號: "10A202", 藥品名稱: "Ampicillin (500mg)針劑" },
+                    { 藥號: "10A203", 藥品名稱: "Augmentin (1000mg)膜衣錠" },
+                    { 藥號: "10C301", 藥品名稱: "Cefazolin (1g)針劑" },
+                    { 藥號: "10C302", 藥品名稱: "Ceftriaxone (1g)針劑" },
+                    { 藥號: "10C303", 藥品名稱: "Ciprofloxacin (200mg/100ml)輸注液" },
+                    { 藥號: "10L401", 藥品名稱: "Levofloxacin (500mg)錠" },
+                    { 藥號: "10M501", 藥品名稱: "Meropenem (500mg)針劑" },
+                    { 藥號: "10V601", 藥品名稱: "Vancomycin (500mg)針劑" }
+                )
+            )
+        )
+
+    HeaderRect As rectangle:
+        Fill: =RGBA(0, 90, 158, 1)
+        Height: =70
+        Width: =Parent.Width
+        X: =0
+        Y: =0
+        ZIndex: =1
+
+    AppTitleLabel As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =40
+        Size: =18
+        Text: ="佳里奇美醫院 藥劑科 - 抗生素報廢管理系統"
+        Width: =800
+        X: =30
+        Y: =15
+        ZIndex: =2
+
+    CardContainer As rectangle:
+        BorderColor: =RGBA(225, 228, 232, 1)
+        BorderStyle: =BorderStyle.Solid
+        BorderThickness: =1
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =580
+        RadiusBottomLeft: =12
+        RadiusBottomRight: =12
+        RadiusTopLeft: =12
+        RadiusTopRight: =12
+        Width: =960
+        X: =(Parent.Width - Self.Width) / 2
+        Y: =95
+        ZIndex: =3
+
+    FormTitleLabel As label:
+        Color: =RGBA(33, 37, 41, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =35
+        Size: =16
+        Text: ="抗生素報廢申請單填報 (純白醫療風 · 雙欄排版)"
+        Width: =900
+        X: =CardContainer.X + 30
+        Y: =CardContainer.Y + 25
+        ZIndex: =4
+
+    WardTitleLabel As label:
+        Color: =RGBA(73, 80, 87, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Size: =13
+        Text: ="病房號碼 *"
+        Width: =420
+        X: =CardContainer.X + 30
+        Y: =CardContainer.Y + 75
+        ZIndex: =5
+
+    WardCombo As combobox:
+        BorderColor: =RGBA(206, 212, 218, 1)
+        ChevronBackground: =RGBA(255, 255, 255, 1)
+        ChevronFill: =RGBA(73, 80, 87, 1)
+        Color: =RGBA(33, 37, 41, 1)
+        DisplayFields: =["Value"]
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =42
+        IsSearchable: =false
+        Items: =["5A 一般病房", "5B 一般病房", "6A 外科病房", "6B 骨科病房", "7A 綜合病房", "ICU 加護病房", "急診醫學部", "開刀房手術室"]
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        SearchFields: =["Value"]
+        SelectMultiple: =false
+        Width: =420
+        X: =CardContainer.X + 30
+        Y: =CardContainer.Y + 110
+        ZIndex: =6
+
+    DrugNameTitleLabel As label:
+        Color: =RGBA(73, 80, 87, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Size: =13
+        Text: ="藥品名稱 (輸入英文字母 A/AD 即時篩選) *"
+        Width: =420
+        X: =CardContainer.X + 30
+        Y: =CardContainer.Y + 175
+        ZIndex: =7
+
+    DrugNameCombo As combobox:
+        BorderColor: =RGBA(206, 212, 218, 1)
+        ChevronBackground: =RGBA(255, 255, 255, 1)
+        ChevronFill: =RGBA(73, 80, 87, 1)
+        Color: =RGBA(33, 37, 41, 1)
+        DisplayFields: =["Value"]
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =42
+        IsSearchable: =true
+        Items: =Sort(Distinct(colAntibiotics, 藥品名稱), Value, SortOrder.Ascending)
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        SearchFields: =["Value"]
+        SelectMultiple: =false
+        Width: =420
+        X: =CardContainer.X + 30
+        Y: =CardContainer.Y + 210
+        ZIndex: =8
+
+    DrugCodeTitleLabel As label:
+        Color: =RGBA(73, 80, 87, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Size: =13
+        Text: ="藥品代碼 (隨藥名選定自動帶出)"
+        Width: =420
+        X: =CardContainer.X + 500
+        Y: =CardContainer.Y + 75
+        ZIndex: =9
+
+    DrugCodeText As text:
+        BorderColor: =RGBA(222, 226, 230, 1)
+        Color: =RGBA(33, 37, 41, 1)
+        Default: =LookUp(colAntibiotics, 藥品名稱 = DrugNameCombo.Selected.Value).藥號
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(248, 249, 250, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =42
+        HintText: ="待選取藥品自動帶出"
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =14
+        Width: =420
+        X: =CardContainer.X + 500
+        Y: =CardContainer.Y + 110
+        ZIndex: =10
+
+    QtyTitleLabel As label:
+        Color: =RGBA(73, 80, 87, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Size: =13
+        Text: ="報廢數量 (超過 50 顆自動觸發紅色警告) *"
+        Width: =420
+        X: =CardContainer.X + 500
+        Y: =CardContainer.Y + 175
+        ZIndex: =11
+
+    QtyInput As text:
+        BorderColor: =If(Value(Self.Text) > 50, Color.Red, RGBA(206, 212, 218, 1))
+        BorderThickness: =If(Value(Self.Text) > 50, 2, 1)
+        Color: =RGBA(33, 37, 41, 1)
+        Default: =""
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =42
+        HintText: ="請輸入報廢數量 (例如 10)"
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =14
+        Width: =420
+        X: =CardContainer.X + 500
+        Y: =CardContainer.Y + 210
+        ZIndex: =12
+
+    WarningLabel As label:
+        Color: =Color.Red
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        Size: =12
+        Text: ="⚠️ 警告：抗生素單次報廢超過 50 顆/支，依院內規定須提報藥劑科主任專案複核！"
+        Visible: =Value(QtyInput.Text) > 50
+        Width: =900
+        X: =CardContainer.X + 30
+        Y: =CardContainer.Y + 270
+        ZIndex: =13
+
+    SubmitButton As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(0, 90, 158, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =48
+        HoverFill: =RGBA(16, 110, 190, 1)
+        OnSelect: |-
+            =If(
+                IsBlank(WardCombo.Selected.Value) || IsBlank(DrugNameCombo.Selected.Value) || IsBlank(QtyInput.Text),
+                Notify("請完整填寫所有必填欄位！", NotificationType.Error),
+                Notify(
+                    "抗生素報廢單提交成功！" & If(Value(QtyInput.Text) > 50, " (已自動送交主任專案複核)", " (正常流程)"),
+                    NotificationType.Success
+                )
+            )
+        RadiusBottomLeft: =6
+        RadiusBottomRight: =6
+        RadiusTopLeft: =6
+        RadiusTopRight: =6
+        Size: =15
+        Text: ="確認提交抗生素報廢單"
+        Width: =420
+        X: =CardContainer.X + (CardContainer.Width - Self.Width) / 2
+        Y: =CardContainer.Y + 340
+        ZIndex: =14

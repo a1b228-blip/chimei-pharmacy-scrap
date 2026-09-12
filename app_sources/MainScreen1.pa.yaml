@@ -166,7 +166,7 @@ Screens:
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     Icon: =Icon.Add
                                     OnSelect: |-
-                                      =NewForm(Form1); UpdateContext({ newMode: true });
+                                      =NewForm(Form1); UpdateContext({ newMode: true, locDrugCode: Blank(), locDrugName: Blank() });
                                     PaddingBottom: =10
                                     PaddingLeft: =10
                                     PaddingRight: =10
@@ -213,7 +213,7 @@ Screens:
                               Items: =Search([@報廢網頁], SearchInput1.Text, Title, Title)
                               LayoutMinWidth: =0
                               OnSelect: |-
-                                =UpdateContext({ itemSelected: true, CurrentItem: ThisItem })
+                                =UpdateContext({ itemSelected: true, CurrentItem: ThisItem, locDrugCode: Blank(), locDrugName: Blank() })
                               TemplateFill: =If(ThisItem.IsSelected, RGBA(230, 230, 230, 1), RGBA(0, 0, 0, 0))
                               TemplateSize: =104
                             Children:
@@ -435,7 +435,7 @@ Screens:
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     Icon: =Icon.Cancel
                                     OnSelect: |-
-                                      =ResetForm(Form1); UpdateContext({ editMode: false, newMode: false });
+                                      =ResetForm(Form1); UpdateContext({ editMode: false, newMode: false, locDrugCode: Blank(), locDrugName: Blank() });
                                     PaddingBottom: =12
                                     PaddingLeft: =12
                                     PaddingRight: =12
@@ -461,7 +461,7 @@ Screens:
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     Icon: =Icon.Edit
                                     OnSelect: |-
-                                      =UpdateContext({ editMode: true, selectedRecord: RecordsGallery1.Selected })
+                                      =UpdateContext({ editMode: true, selectedRecord: RecordsGallery1.Selected, locDrugCode: Blank(), locDrugName: Blank() })
                                     PaddingBottom: =12
                                     PaddingLeft: =12
                                     PaddingRight: =12
@@ -518,7 +518,7 @@ Screens:
                                     NumberOfColumns: =2
                                     OnFailure: =Notify("無法儲存。請檢查表單中是否有錯誤。", NotificationType.Error)
                                     OnSuccess: |-
-                                      =UpdateContext({ CurrentItem: Self.LastSubmit, editMode: false, newMode: false })
+                                      =UpdateContext({ CurrentItem: Self.LastSubmit, editMode: false, newMode: false, locDrugCode: Blank(), locDrugName: Blank() })
                                   Children:
                                     - 標題_DataCard1:
                                         Control: TypedDataCard
@@ -562,7 +562,7 @@ Screens:
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                                                 Color: =RGBA(50, 49, 48, 1)
-                                                Default: =Parent.Default
+                                                Default: =Coalesce(locDrugCode, Parent.Default)
                                                 DelayOutput: =true
                                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                                 DisabledColor: =RGBA(161, 159, 157, 1)
@@ -573,6 +573,8 @@ Screens:
                                                 HoverColor: =RGBA(50, 49, 48, 1)
                                                 HoverFill: =RGBA(255, 255, 255, 1)
                                                 MaxLength: =Parent.MaxLength
+                                                OnChange: |-
+                                                  =If(!IsBlank(Self.Text), With({ matched: LookUp([@報廢網頁], Title = Self.Text) }, If(!IsBlank(matched.藥品名稱), UpdateContext({ locDrugName: matched.藥品名稱, locDrugCode: Self.Text }))))
                                                 PaddingLeft: =5
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
@@ -642,7 +644,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@報廢網頁],DataSourceInfo.DisplayName,'OData__x85e5__x54c1__x540d__x7a31_')
                                           MaxLength: =DataSourceInfo([@報廢網頁], DataSourceInfo.MaxLength, 'OData__x85e5__x54c1__x540d__x7a31_')
                                           Required: =false
-                                          Update: =DataCardValue2.Text
+                                          Update: =Coalesce(DataCardValue2.Selected.Value, DataCardValue2.SearchText, Parent.Default)
                                           Width: =458
                                           X: =1
                                           Y: =0
@@ -669,23 +671,37 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue2:
-                                              Control: Classic/TextInput
+                                              Control: Classic/ComboBox
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                                ChevronBackground: =RGBA(245, 245, 245, 1)
+                                                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                                                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                                                ChevronFill: =RGBA(50, 49, 48, 1)
+                                                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                                                ChevronHoverFill: =RGBA(50, 49, 48, 1)
                                                 Color: =RGBA(50, 49, 48, 1)
-                                                Default: =Parent.Default
+                                                DefaultSelectedItems: |-
+                                                  =If(!IsBlank(locDrugName), Table({ Value: locDrugName }), If(!IsBlank(Parent.Default), Table({ Value: Parent.Default }), []))
                                                 DelayOutput: =true
                                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                                 DisabledColor: =RGBA(161, 159, 157, 1)
                                                 DisabledFill: =RGBA(242, 242, 241, 0)
+                                                DisplayFields: =["Value"]
                                                 DisplayMode: =Parent.DisplayMode
+                                                Fill: =RGBA(245, 245, 245, 1)
                                                 Font: =Font.'Segoe UI'
+                                                Height: =40
                                                 HoverBorderColor: =RGBA(16, 110, 190, 1)
                                                 HoverColor: =RGBA(50, 49, 48, 1)
                                                 HoverFill: =RGBA(255, 255, 255, 1)
-                                                MaxLength: =Parent.MaxLength
-                                                PaddingLeft: =5
+                                                IsSearchable: =true
+                                                Items: |-
+                                                  =Sort(Distinct(Filter([@報廢網頁], !IsBlank(藥品名稱)), 藥品名稱), Value, SortOrder.Ascending)
+                                                OnChange: |-
+                                                  =If(!IsBlank(Self.Selected.Value), With({ matched: LookUp([@報廢網頁], 藥品名稱 = Self.Selected.Value) }, If(!IsBlank(matched.Title), UpdateContext({ locDrugCode: matched.Title, locDrugName: Self.Selected.Value }))))
+                                                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
                                                 PressedFill: =RGBA(255, 255, 255, 1)
@@ -693,6 +709,10 @@ Screens:
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
                                                 RadiusTopRight: =0
+                                                SearchFields: =["Value"]
+                                                SelectMultiple: =false
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(0, 120, 212, 1)
                                                 Tooltip: =Parent.DisplayName
                                                 Width: =Parent.Width - 60
                                                 X: =30

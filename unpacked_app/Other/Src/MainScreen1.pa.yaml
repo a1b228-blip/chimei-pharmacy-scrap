@@ -1,19 +1,13 @@
-# ************************************************************************************************
-# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
-# Use the maker portal to create and edit your Power Apps.
-# 
-# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
-# 
-# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
-# ************************************************************************************************
 Screens:
   MainScreen1:
     Properties:
       Fill: =RGBA(255, 255, 255, 1)
       LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: |-
+        =Set(IsPharmacyAdmin, Lower(User().Email) in ["b305w2@chimei.org.tw"])
     Children:
       - ScreenContainer1:
-          Control: GroupContainer@1.5.0
+          Control: GroupContainer
           Variant: AutoLayout
           Properties:
             DropShadow: =DropShadow.None
@@ -33,7 +27,7 @@ Screens:
             Width: =Parent.Width
           Children:
             - TableNameContainer1:
-                Control: GroupContainer@1.5.0
+                Control: GroupContainer
                 Variant: AutoLayout
                 Properties:
                   FillPortions: =0
@@ -43,7 +37,7 @@ Screens:
                   LayoutMinHeight: =16
                 Children:
                   - TableNameLabel1:
-                      Control: Label@2.5.1
+                      Control: Label
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -61,7 +55,7 @@ Screens:
                         Size: =16
                         Text: =DataSourceInfo([@報廢網頁], DataSourceInfo.DisplayName)
             - BodyContainer1:
-                Control: GroupContainer@1.5.0
+                Control: GroupContainer
                 Variant: AutoLayout
                 Properties:
                   DropShadow: =DropShadow.None
@@ -77,7 +71,7 @@ Screens:
                   RadiusTopRight: =0
                 Children:
                   - SidebarContainer1:
-                      Control: GroupContainer@1.5.0
+                      Control: GroupContainer
                       Variant: AutoLayout
                       Properties:
                         Fill: =RGBA(255, 255, 255, 1)
@@ -91,7 +85,7 @@ Screens:
                         Visible: =If(And(MainScreen1.Size = ScreenSize.Small, Or(newMode, editMode, itemSelected)), false, true)
                       Children:
                         - SearchContainer1:
-                            Control: GroupContainer@1.5.0
+                            Control: GroupContainer
                             Variant: AutoLayout
                             Properties:
                               DropShadow: =DropShadow.None
@@ -106,7 +100,7 @@ Screens:
                               RadiusTopRight: =0
                             Children:
                               - SearchInput1:
-                                  Control: Classic/TextInput@2.3.2
+                                  Control: Classic/TextInput
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 1)
                                     BorderStyle: =BorderStyle.None
@@ -129,7 +123,7 @@ Screens:
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     Size: =14
                               - SearchIcon1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 1)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -145,7 +139,7 @@ Screens:
                                     PaddingTop: =10
                                     Width: =44
                         - NewRecordButtonBarContainer1:
-                            Control: GroupContainer@1.5.0
+                            Control: GroupContainer
                             Variant: AutoLayout
                             Properties:
                               DropShadow: =DropShadow.None
@@ -158,7 +152,7 @@ Screens:
                               RadiusTopRight: =0
                             Children:
                               - NewRecordAddIcon1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -172,7 +166,7 @@ Screens:
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     Icon: =Icon.Add
                                     OnSelect: |-
-                                      =NewForm(Form1); UpdateContext({ newMode: true });
+                                      =NewForm(Form1); UpdateContext({ newMode: true, locDrugCode: Blank(), locDrugName: Blank() });
                                     PaddingBottom: =10
                                     PaddingLeft: =10
                                     PaddingRight: =10
@@ -182,7 +176,7 @@ Screens:
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     Width: =44
                               - NewRecordLabel1:
-                                  Control: Label@2.5.1
+                                  Control: Label
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     BorderStyle: =BorderStyle.None
@@ -196,7 +190,7 @@ Screens:
                                     Height: =44
                                     Text: ="新增"
                         - RecordsListSeparator1:
-                            Control: Rectangle@2.3.0
+                            Control: Rectangle
                             Properties:
                               AlignInContainer: =AlignInContainer.Stretch
                               BorderColor: =RGBA(0, 0, 0, 0)
@@ -210,7 +204,7 @@ Screens:
                               LayoutMinWidth: =200
                               PressedFill: =RGBA(0, 120, 212, 1)
                         - RecordsGallery1:
-                            Control: Gallery@2.15.0
+                            Control: Gallery
                             Variant: BrowseLayout_Vertical_ThreeTextVariant_ver5.0
                             Properties:
                               BorderColor: =RGBA(245, 245, 245, 1)
@@ -219,12 +213,12 @@ Screens:
                               Items: =Search([@報廢網頁], SearchInput1.Text, Title, Title)
                               LayoutMinWidth: =0
                               OnSelect: |-
-                                =UpdateContext({ itemSelected: true, CurrentItem: ThisItem })
+                                =UpdateContext({ itemSelected: true, CurrentItem: ThisItem, locDrugCode: Blank(), locDrugName: Blank() })
                               TemplateFill: =If(ThisItem.IsSelected, RGBA(230, 230, 230, 1), RGBA(0, 0, 0, 0))
                               TemplateSize: =104
                             Children:
                               - Title1:
-                                  Control: Label@2.5.1
+                                  Control: Label
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 1)
                                     Color: =RGBA(50, 49, 48, 1)
@@ -244,7 +238,7 @@ Screens:
                                     X: =16
                                     Y: =(Parent.TemplateHeight - (Self.Size*1.8 + Subtitle1.Size*1.8 + 2 + Body1.Size*1.8)) / 2
                               - Subtitle1:
-                                  Control: Label@2.5.1
+                                  Control: Label
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 1)
                                     Color: =RGBA(96, 94, 92, 1)
@@ -264,7 +258,7 @@ Screens:
                                     X: =Title1.X
                                     Y: =Title1.Y + Title1.Height
                               - Body1:
-                                  Control: Label@2.5.1
+                                  Control: Label
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 1)
                                     Color: =RGBA(96, 94, 92, 1)
@@ -284,7 +278,7 @@ Screens:
                                     X: =Title1.X
                                     Y: =Subtitle1.Y + Subtitle1.Height
                               - NextArrow1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     AccessibleLabel: =Self.Tooltip
                                     BorderColor: =RGBA(0, 0, 0, 0)
@@ -311,7 +305,7 @@ Screens:
                                     X: =Parent.TemplateWidth - Self.Width - 12
                                     Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
                               - Separator1:
-                                  Control: Rectangle@2.3.0
+                                  Control: Rectangle
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Fill: =RGBA(255, 255, 255, 1)
@@ -320,7 +314,7 @@ Screens:
                                     Width: =Parent.TemplateWidth
                                     Y: =Parent.TemplateHeight - Self.Height
                               - Rectangle1:
-                                  Control: Rectangle@2.3.0
+                                  Control: Rectangle
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Fill: =RGBA(0, 120, 212, 1)
@@ -329,7 +323,7 @@ Screens:
                                     Visible: =ThisItem.IsSelected
                                     Width: =4
                   - RightContainer1:
-                      Control: GroupContainer@1.5.0
+                      Control: GroupContainer
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
@@ -350,7 +344,7 @@ Screens:
                         Width: =0
                       Children:
                         - SelectedRecordHeaderContainer1:
-                            Control: GroupContainer@1.5.0
+                            Control: GroupContainer
                             Variant: AutoLayout
                             Properties:
                               Fill: =RGBA(255, 255, 255, 1)
@@ -360,7 +354,7 @@ Screens:
                               LayoutDirection: =LayoutDirection.Horizontal
                             Children:
                               - BackIconButton1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -386,7 +380,7 @@ Screens:
                                     Visible: =If(MainScreen1.Size = ScreenSize.Small, And(!editMode, !newMode, !deleteMode), false)
                                     Width: =50
                               - SelectedRecordTitle1:
-                                  Control: Label@2.5.1
+                                  Control: Label
                                   Properties:
                                     AlignInContainer: =AlignInContainer.Stretch
                                     BorderColor: =RGBA(0, 0, 0, 0)
@@ -402,7 +396,7 @@ Screens:
                                     PaddingLeft: =30
                                     Text: =RecordsGallery1.Selected.'標題'
                               - SubmitFormButton1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -427,7 +421,7 @@ Screens:
                                     Visible: =Or(editMode, newMode)
                                     Width: =50
                               - ResetFormButton1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -441,7 +435,7 @@ Screens:
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     Icon: =Icon.Cancel
                                     OnSelect: |-
-                                      =ResetForm(Form1); UpdateContext({ editMode: false, newMode: false });
+                                      =ResetForm(Form1); UpdateContext({ editMode: false, newMode: false, locDrugCode: Blank(), locDrugName: Blank() });
                                     PaddingBottom: =12
                                     PaddingLeft: =12
                                     PaddingRight: =12
@@ -453,7 +447,7 @@ Screens:
                                     Visible: =Or(editMode, newMode)
                                     Width: =50
                               - EditIconButton1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -467,7 +461,7 @@ Screens:
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     Icon: =Icon.Edit
                                     OnSelect: |-
-                                      =UpdateContext({ editMode: true, selectedRecord: RecordsGallery1.Selected })
+                                      =UpdateContext({ editMode: true, selectedRecord: RecordsGallery1.Selected, locDrugCode: Blank(), locDrugName: Blank() })
                                     PaddingBottom: =12
                                     PaddingLeft: =12
                                     PaddingRight: =12
@@ -476,10 +470,10 @@ Screens:
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
-                                    Visible: =And(!editMode, !newMode, !deleteMode)
+                                    Visible: =And(!editMode, !newMode, !deleteMode, IsPharmacyAdmin)
                                     Width: =50
                               - DeleteIconButton1:
-                                  Control: Classic/Icon@2.5.0
+                                  Control: Classic/Icon
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     Color: =RGBA(0, 120, 212, 1)
@@ -502,17 +496,17 @@ Screens:
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
-                                    Visible: =And(!editMode, !newMode, !deleteMode)
+                                    Visible: =And(!editMode, !newMode, !deleteMode, IsPharmacyAdmin)
                                     Width: =50
                         - MainContainer1:
-                            Control: GroupContainer@1.5.0
+                            Control: GroupContainer
                             Variant: AutoLayout
                             Properties:
                               Fill: =RGBA(255, 255, 255, 1)
                               LayoutDirection: =LayoutDirection.Vertical
                             Children:
                               - Form1:
-                                  Control: Form@2.4.4
+                                  Control: Form
                                   Variant: Classic
                                   Layout: Vertical
                                   Properties:
@@ -524,10 +518,10 @@ Screens:
                                     NumberOfColumns: =2
                                     OnFailure: =Notify("無法儲存。請檢查表單中是否有錯誤。", NotificationType.Error)
                                     OnSuccess: |-
-                                      =UpdateContext({ CurrentItem: Self.LastSubmit, editMode: false, newMode: false })
+                                      =UpdateContext({ CurrentItem: Self.LastSubmit, editMode: false, newMode: false, locDrugCode: Blank(), locDrugName: Blank() })
                                   Children:
                                     - 標題_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicTextualEdit
                                         Properties:
                                           BorderColor: =RGBA(245, 245, 245, 1)
@@ -542,7 +536,7 @@ Screens:
                                           Y: =0
                                         Children:
                                           - DataCardKey1:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -563,12 +557,12 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue1:
-                                              Control: Classic/TextInput@2.3.2
+                                              Control: Classic/TextInput
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                                                 Color: =RGBA(50, 49, 48, 1)
-                                                Default: =Parent.Default
+                                                Default: =Coalesce(locDrugCode, Parent.Default)
                                                 DelayOutput: =true
                                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                                 DisabledColor: =RGBA(161, 159, 157, 1)
@@ -579,6 +573,8 @@ Screens:
                                                 HoverColor: =RGBA(50, 49, 48, 1)
                                                 HoverFill: =RGBA(255, 255, 255, 1)
                                                 MaxLength: =Parent.MaxLength
+                                                OnChange: |-
+                                                  =If(!IsBlank(Self.Text), With({ matched: LookUp([@報廢網頁], Title = Self.Text) }, If(!IsBlank(matched.藥品名稱), UpdateContext({ locDrugName: matched.藥品名稱, locDrugCode: Self.Text }))))
                                                 PaddingLeft: =5
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
@@ -592,7 +588,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey1.Y + DataCardKey1.Height + 5
                                           - ErrorMessage1:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -617,7 +613,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue1.Y + DataCardValue1.Height
                                           - StarVisible1:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -638,7 +634,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey1.Y
                                     - 藥品名稱_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicTextualEdit
                                         IsLocked: true
                                         Properties:
@@ -648,13 +644,13 @@ Screens:
                                           DisplayName: =DataSourceInfo([@報廢網頁],DataSourceInfo.DisplayName,'OData__x85e5__x54c1__x540d__x7a31_')
                                           MaxLength: =DataSourceInfo([@報廢網頁], DataSourceInfo.MaxLength, 'OData__x85e5__x54c1__x540d__x7a31_')
                                           Required: =false
-                                          Update: =DataCardValue2.Text
+                                          Update: =Coalesce(DataCardValue2.Selected.Value, DataCardValue2.SearchText, Parent.Default)
                                           Width: =458
                                           X: =1
                                           Y: =0
                                         Children:
                                           - DataCardKey2:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -675,23 +671,37 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue2:
-                                              Control: Classic/TextInput@2.3.2
+                                              Control: Classic/ComboBox
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                                ChevronBackground: =RGBA(245, 245, 245, 1)
+                                                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                                                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                                                ChevronFill: =RGBA(50, 49, 48, 1)
+                                                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                                                ChevronHoverFill: =RGBA(50, 49, 48, 1)
                                                 Color: =RGBA(50, 49, 48, 1)
-                                                Default: =Parent.Default
+                                                DefaultSelectedItems: |-
+                                                  =If(!IsBlank(locDrugName), Table({ Value: locDrugName }), If(!IsBlank(Parent.Default), Table({ Value: Parent.Default }), []))
                                                 DelayOutput: =true
                                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                                 DisabledColor: =RGBA(161, 159, 157, 1)
                                                 DisabledFill: =RGBA(242, 242, 241, 0)
+                                                DisplayFields: =["Value"]
                                                 DisplayMode: =Parent.DisplayMode
+                                                Fill: =RGBA(245, 245, 245, 1)
                                                 Font: =Font.'Segoe UI'
+                                                Height: =40
                                                 HoverBorderColor: =RGBA(16, 110, 190, 1)
                                                 HoverColor: =RGBA(50, 49, 48, 1)
                                                 HoverFill: =RGBA(255, 255, 255, 1)
-                                                MaxLength: =Parent.MaxLength
-                                                PaddingLeft: =5
+                                                IsSearchable: =true
+                                                Items: |-
+                                                  =Sort(Distinct(Filter([@報廢網頁], !IsBlank(藥品名稱)), 藥品名稱), Value, SortOrder.Ascending)
+                                                OnChange: |-
+                                                  =If(!IsBlank(Self.Selected.Value), With({ matched: LookUp([@報廢網頁], 藥品名稱 = Self.Selected.Value) }, If(!IsBlank(matched.Title), UpdateContext({ locDrugCode: matched.Title, locDrugName: Self.Selected.Value }))))
+                                                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
                                                 PressedFill: =RGBA(255, 255, 255, 1)
@@ -699,12 +709,16 @@ Screens:
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
                                                 RadiusTopRight: =0
+                                                SearchFields: =["Value"]
+                                                SelectMultiple: =false
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(0, 120, 212, 1)
                                                 Tooltip: =Parent.DisplayName
                                                 Width: =Parent.Width - 60
                                                 X: =30
                                                 Y: =DataCardKey2.Y + DataCardKey2.Height + 5
                                           - ErrorMessage2:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -729,7 +743,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue2.Y + DataCardValue2.Height
                                           - StarVisible2:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -750,7 +764,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey2.Y
                                     - 報廢日期_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicDateEdit
                                         IsLocked: true
                                         Properties:
@@ -765,7 +779,7 @@ Screens:
                                           Y: =1
                                         Children:
                                           - DataCardKey3:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -786,7 +800,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue3:
-                                              Control: Classic/DatePicker@2.6.0
+                                              Control: Classic/DatePicker
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -811,7 +825,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey3.Y + DataCardKey3.Height + 5
                                           - ErrorMessage3:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -836,7 +850,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue3.Y + DataCardValue3.Height
                                           - StarVisible3:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -857,7 +871,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey3.Y
                                     - 申請人_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicComboBoxEdit
                                         Properties:
                                           BorderColor: =RGBA(245, 245, 245, 1)
@@ -871,7 +885,7 @@ Screens:
                                           Y: =1
                                         Children:
                                           - DataCardKey4:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -892,7 +906,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue4:
-                                              Control: Classic/ComboBox@2.4.0
+                                              Control: Classic/ComboBox
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -936,7 +950,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey4.Y + DataCardKey4.Height + 5
                                           - ErrorMessage4:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -961,7 +975,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue4.Y + DataCardValue4.Height
                                           - StarVisible4:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -982,7 +996,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey4.Y
                                     - 複核人_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicComboBoxEdit
                                         IsLocked: true
                                         Properties:
@@ -997,7 +1011,7 @@ Screens:
                                           Y: =2
                                         Children:
                                           - DataCardKey5:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1018,7 +1032,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue5:
-                                              Control: Classic/ComboBox@2.4.0
+                                              Control: Classic/ComboBox
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1054,7 +1068,7 @@ Screens:
                                                 X: =30
                                                 Y: =50
                                           - ErrorMessage5:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1079,7 +1093,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue5.Y + DataCardValue5.Height
                                           - StarVisible5:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1100,7 +1114,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey5.Y
                                     - 藥庫複核人員_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicComboBoxEdit
                                         IsLocked: true
                                         Properties:
@@ -1110,12 +1124,13 @@ Screens:
                                           DisplayName: =DataSourceInfo([@報廢網頁],DataSourceInfo.DisplayName,'OData__x85e5__x5eab__x8907__x6838__x4e')
                                           Required: =false
                                           Update: =DataCardValue6.Selected
+                                          Visible: =IsPharmacyAdmin
                                           Width: =458
                                           X: =1
                                           Y: =2
                                         Children:
                                           - DataCardKey6:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1136,7 +1151,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue6:
-                                              Control: Classic/ComboBox@2.4.0
+                                              Control: Classic/ComboBox
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1172,7 +1187,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey6.Y + DataCardKey6.Height + 5
                                           - ErrorMessage6:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1197,7 +1212,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue6.Y + DataCardValue6.Height
                                           - StarVisible6:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1218,7 +1233,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey6.Y
                                     - 批號_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicTextualEdit
                                         Properties:
                                           BorderColor: =RGBA(245, 245, 245, 1)
@@ -1233,7 +1248,7 @@ Screens:
                                           Y: =3
                                         Children:
                                           - DataCardKey7:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1254,7 +1269,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue7:
-                                              Control: Classic/TextInput@2.3.2
+                                              Control: Classic/TextInput
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1285,7 +1300,7 @@ Screens:
                                                 X: =82
                                                 Y: =13
                                           - ErrorMessage7:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1310,7 +1325,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue7.Y + DataCardValue7.Height
                                           - StarVisible7:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1331,7 +1346,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey7.Y
                                           - Label2:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               Properties:
                                                 BorderColor: =RGBA(0, 0, 0, 0)
                                                 BorderStyle: =BorderStyle.None
@@ -1365,7 +1380,7 @@ Screens:
                                                 X: =12
                                                 Y: =45
                                     - 報廢數量_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicNumberEdit
                                         IsLocked: true
                                         Properties:
@@ -1380,7 +1395,7 @@ Screens:
                                           Y: =3
                                         Children:
                                           - DataCardKey8:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1401,7 +1416,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue8:
-                                              Control: Classic/TextInput@2.3.2
+                                              Control: Classic/TextInput
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1430,7 +1445,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey8.Y + DataCardKey8.Height + 5
                                           - ErrorMessage8:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1455,7 +1470,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue8.Y + DataCardValue8.Height
                                           - StarVisible8:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1476,7 +1491,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey8.Y
                                     - 報廢原因_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicComboBoxEdit
                                         IsLocked: true
                                         Properties:
@@ -1491,7 +1506,7 @@ Screens:
                                           Y: =4
                                         Children:
                                           - DataCardKey9:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1512,7 +1527,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue9:
-                                              Control: Classic/ComboBox@2.4.0
+                                              Control: Classic/ComboBox
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1548,7 +1563,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey9.Y + DataCardKey9.Height + 5
                                           - ErrorMessage9:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1573,7 +1588,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue9.Y + DataCardValue9.Height
                                           - StarVisible9:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1594,7 +1609,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey9.Y
                                     - 備註_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicTextualEdit
                                         IsLocked: true
                                         Properties:
@@ -1610,7 +1625,7 @@ Screens:
                                           Y: =4
                                         Children:
                                           - DataCardKey10:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1631,7 +1646,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue10:
-                                              Control: Classic/TextInput@2.3.2
+                                              Control: Classic/TextInput
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1660,7 +1675,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey10.Y + DataCardKey10.Height + 5
                                           - ErrorMessage10:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1685,7 +1700,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue10.Y + DataCardValue10.Height
                                           - StarVisible10:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1706,7 +1721,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey10.Y
                                     - 附件_DataCard1:
-                                        Control: TypedDataCard@1.0.7
+                                        Control: TypedDataCard
                                         Variant: ClassicAttachmentsEdit
                                         IsLocked: true
                                         Properties:
@@ -1721,7 +1736,7 @@ Screens:
                                           Y: =5
                                         Children:
                                           - DataCardKey11:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldName
                                               Properties:
                                                 AutoHeight: =true
@@ -1742,7 +1757,7 @@ Screens:
                                                 X: =30
                                                 Y: =10
                                           - DataCardValue11:
-                                              Control: Attachments@2.3.0
+                                              Control: Attachments
                                               MetadataKey: FieldValue
                                               Properties:
                                                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
@@ -1774,7 +1789,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardKey11.Y + DataCardKey11.Height + 5
                                           - ErrorMessage11:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: ErrorMessage
                                               Properties:
                                                 AutoHeight: =true
@@ -1799,7 +1814,7 @@ Screens:
                                                 X: =30
                                                 Y: =DataCardValue11.Y + DataCardValue11.Height
                                           - StarVisible11:
-                                              Control: Label@2.5.1
+                                              Control: Label
                                               MetadataKey: FieldRequired
                                               Properties:
                                                 Align: =Align.Center
@@ -1820,7 +1835,7 @@ Screens:
                                                 Wrap: =false
                                                 Y: =DataCardKey11.Y
                   - DeleteConfirmDialogContainer1:
-                      Control: GroupContainer@1.5.0
+                      Control: GroupContainer
                       Variant: AutoLayout
                       Properties:
                         FillPortions: =7
@@ -1829,7 +1844,7 @@ Screens:
                         Width: =0
                       Children:
                         - ConfirmDeletionLabel1:
-                            Control: Label@2.5.1
+                            Control: Label
                             Properties:
                               Align: =Align.Center
                               AlignInContainer: =AlignInContainer.Stretch
@@ -1844,7 +1859,7 @@ Screens:
                               Font: =Font.'Segoe UI'
                               Text: ="您確定要刪除此記錄嗎?"
                         - ConfirmDeleteButtonBarContainer1:
-                            Control: GroupContainer@1.5.0
+                            Control: GroupContainer
                             Variant: AutoLayout
                             Properties:
                               DropShadow: =DropShadow.None
@@ -1858,7 +1873,7 @@ Screens:
                               RadiusTopRight: =0
                             Children:
                               - CancelDeleteButton1:
-                                  Control: Classic/Button@2.2.0
+                                  Control: Classic/Button
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     BorderStyle: =BorderStyle.None
@@ -1882,7 +1897,7 @@ Screens:
                                     RadiusTopRight: =0
                                     Text: ="取消"
                               - ConfirmDeleteButton1:
-                                  Control: Classic/Button@2.2.0
+                                  Control: Classic/Button
                                   Properties:
                                     BorderColor: =RGBA(0, 0, 0, 0)
                                     BorderStyle: =BorderStyle.None

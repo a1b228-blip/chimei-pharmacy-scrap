@@ -40,7 +40,7 @@ class NumberedCanvas(canvas.Canvas):
         # 頁首 (第 2 頁開始)
         if self._pageNumber > 1:
             self.drawString(54, 800, '佳里奇美醫院 藥劑科 醫療自動化標準作業手冊 (SOP)')
-            self.drawRightString(541, 800, 'AI Agent 本地端互動模擬驗證與 Power Apps 發布全流程 (方法二)')
+            self.drawRightString(541, 800, '本地端即時模擬驗證與 Power Apps / Power BI 完整串接指南')
             self.setStrokeColor(colors.HexColor('#CBD5E1'))
             self.setLineWidth(0.5)
             self.line(54, 792, 541, 792)
@@ -89,21 +89,21 @@ subtitle_style = ParagraphStyle(
 h1_style = ParagraphStyle(
     'SectionH1',
     fontName='ArialUnicode',
-    fontSize=12.5,
-    leading=17,
+    fontSize=12,
+    leading=16.5,
     textColor=colors.HexColor('#005A9E'),
-    spaceBefore=12,
-    spaceAfter=6,
+    spaceBefore=11,
+    spaceAfter=5,
     keepWithNext=True
 )
 
 h2_style = ParagraphStyle(
     'SectionH2',
     fontName='ArialUnicode',
-    fontSize=10.5,
-    leading=14.5,
+    fontSize=10,
+    leading=14,
     textColor=colors.HexColor('#1E293B'),
-    spaceBefore=8,
+    spaceBefore=7,
     spaceAfter=3,
     keepWithNext=True
 )
@@ -111,35 +111,35 @@ h2_style = ParagraphStyle(
 body_style = ParagraphStyle(
     'BodyDark',
     fontName='ArialUnicode',
-    fontSize=9,
-    leading=13.5,
+    fontSize=8.8,
+    leading=13.2,
     textColor=colors.HexColor('#334155'),
-    spaceAfter=5
+    spaceAfter=4
 )
 
 bullet_style = ParagraphStyle(
     'BulletText',
     fontName='ArialUnicode',
-    fontSize=8.8,
-    leading=13,
+    fontSize=8.6,
+    leading=12.8,
     textColor=colors.HexColor('#334155'),
     leftIndent=14,
-    spaceAfter=3
+    spaceAfter=2.5
 )
 
 story = []
 
-# ==================== 第 1 頁：封面資訊與架構圖 ====================
+# ==================== 第 1 頁：封面資訊與全流程架構圖 ====================
 story.append(Spacer(1, 5))
 story.append(Paragraph('佳里奇美醫院 藥劑科 醫療自動化專題手冊', subtitle_style))
-story.append(Paragraph('AI Agent「本地端即時模擬驗證」開發模式<br/>3,427 筆藥品連動測試與 Power Apps / Power BI / Teams 發布全流程指南', title_style))
+story.append(Paragraph('AI Agent 本地端即時模擬驗證模式<br/>3,427 筆藥品連動、Teams 審核與 Power BI 串接全流程指南', title_style))
 story.append(Spacer(1, 4))
 
 # 資訊摘要盒
 info_data = [
-    [Paragraph('<b>文件編號</b>：CMH-PHARM-202609-02 (方法二標準版)', body_style), Paragraph('<b>編製小組</b>：藥劑科智慧藥事小組 / Google Antigravity', body_style)],
+    [Paragraph('<b>文件編號</b>：CMH-PHARM-202609-SOP', body_style), Paragraph('<b>編製人員</b>：藥劑科智慧藥事小組 / Google Antigravity', body_style)],
     [Paragraph('<b>實作案例</b>：全院 3,427 筆藥品清冊與抗生素報廢管理', body_style), Paragraph('<b>發布日期</b>：2026 年 09 月 13 日', body_style)],
-    [Paragraph('<b>核心技術</b>：本地高傳真模擬 · PAC CLI 打包 · Teams 審核卡', body_style), Paragraph('<b>版本狀態</b>：正式版 (v2.0 發行)', body_style)]
+    [Paragraph('<b>核心技術</b>：本地高傳真模擬 · PAC CLI · Power BI 串接', body_style), Paragraph('<b>版本狀態</b>：正式版 (v2.1 完整指南發行)', body_style)]
 ]
 t_info = Table(info_data, colWidths=[240, 247])
 t_info.setStyle(TableStyle([
@@ -155,12 +155,12 @@ story.append(t_info)
 story.append(Spacer(1, 8))
 
 # 執行摘要
-story.append(Paragraph('【執行摘要：為什麼選擇「方法二：本地端即時模擬驗證」？】', h1_style))
-story.append(Paragraph('在建置包含全院 3,427 筆海量藥品主檔與複雜欄位連動時，若直接在雲端 Power Apps 上除錯，常會遇到「網頁載入緩慢、欄位打錯引發循環參考、下拉選單多選無法自動收合」等困擾。<b>「方法二」徹底翻轉工作流</b>：由 AI Agent 在本地端先建立包含 3,427 筆完整真實藥品資料的高傳真互動模擬器，藥師直接在本機瀏覽器打英文字母搜尋、測試藥號連動與紅色警示，<b>「在本地測試到 100% 滿意之後，再由 Agent 透過微軟官方 PAC CLI 一鍵打包輸出 .msapp 上傳雲端」</b>，實現零返工、零卡頓的最高效交付！', body_style))
+story.append(Paragraph('【執行摘要：本地端模擬驗證與跨端整合】', h1_style))
+story.append(Paragraph('在建置全院海量藥品（3,427 筆）報廢表單時，傳統雲端 Low-Code 拖拉易遇到版面歪斜、重疊灰底與循環參考等困擾。本標準流程導入 <b>「本地高傳真互動模擬」</b>：藥師直接在本機瀏覽器打英文字母搜尋、測試藥號連動與紅框警戒，滿意後由 Agent 透過微軟官方 PAC CLI 編譯打包輸出實體 .msapp 上傳 Power Apps。資料庫更進一步與 Microsoft Teams 自動審核推播及 <b>Power BI 醫療戰情儀表板</b> 全面串接，實現臨床填報、行政審查與數據分析之完整閉環。', body_style))
 
 # 流程圖展示
 story.append(Spacer(1, 4))
-story.append(Paragraph('【全流程視覺化架構圖（高清大字版）】', h1_style))
+story.append(Paragraph('【全流程視覺化架構圖】', h1_style))
 img_path = '/Users/jiangruiyi/Documents/antigravity/藥劑科報廢流程表/PowerApps_Agent開發流程圖.png'
 if os.path.exists(img_path):
     story.append(Image(img_path, width=487, height=270))
@@ -169,22 +169,22 @@ story.append(Spacer(1, 6))
 # 換頁進入第 2 頁
 story.append(PageBreak())
 
-# ==================== 第 2 頁：方法二從頭到尾五大步驟詳細教學 ====================
-story.append(Paragraph('第一章：方法二（本地模擬驗證 ➔ 雲端一次發布）手把手教學', h1_style))
-story.append(Paragraph('以下完整示範臨床藥師如何配合 AI Agent，從一份本機 Excel 藥品表開始，完整走完開發與測試流程：', body_style))
+# ==================== 第 2 頁：本地端模擬驗證五大步驟 ====================
+story.append(Paragraph('第一章：本地端即時模擬驗證手把手教學（從 Excel 到 Power Apps）', h1_style))
+story.append(Paragraph('以下完整說明臨床藥師如何配合 AI Agent，從一份本機 Excel 藥品表開始，走完開發、測試與雲端載入：', body_style))
 
 story.append(Paragraph('步驟一：準備藥品清冊 Excel 與口述需求', h2_style))
-story.append(Paragraph('1. <b>整理資料檔</b>：藥庫提供 <code>藥品藥號.xlsx</code>，包含全院 3,427 筆藥品（主要欄位為「藥號」與「藥品學名」）。', bullet_style))
+story.append(Paragraph('1. <b>資料檔準備</b>：藥庫提供 <code>藥品藥號.xlsx</code>，涵蓋全院 3,427 筆藥品（主要欄位為「藥號」與「藥品學名」）。', bullet_style))
 story.append(Paragraph('2. <b>口述介面規格</b>：例如向 Agent 說：「我想做抗生素報廢管理 App，純白醫療風格無灰底。要有四個欄位：病房號碼（下拉選單）、藥品名稱（打英文字母搜尋）、藥品代碼（自動帶出）、報廢數量（若大於 50 顆要自動跳紅色警告）。」', bullet_style))
 
 story.append(Paragraph('步驟二：AI Agent 在本地端建立「高傳真互動模擬器」', h2_style))
-story.append(Paragraph('1. Agent 在背景自動解析 <code>藥品藥號.xlsx</code>，將 3,427 筆資料轉換為本地高效率快取結構。', bullet_style))
-story.append(Paragraph('2. Agent 於本地端生成完全等同 Power Apps 畫面規格的互動模擬環境，注入英文字母即時快篩、LookUp 藥號連動與紅框警戒邏輯。', bullet_style))
+story.append(Paragraph('1. Agent 在背景自動解析 <code>藥品藥號.xlsx</code>，將 3,427 筆資料轉換為本機高效率資料結構。', bullet_style))
+story.append(Paragraph('2. Agent 生成等同 Power Apps 畫面規格的本機模擬環境，注入英文字母即時快篩、LookUp 藥號連動與紅框警訊。', bullet_style))
 
 story.append(Paragraph('步驟三：臨床人員在本地端直接點選「實機驗收」', h2_style))
-story.append(Paragraph('藥師無需登入微軟帳號，本機直接開啟測試畫面進行四大臨床驗證：', body_style))
+story.append(Paragraph('藥師本機直接開啟測試畫面（如 <code>抗生素報廢管理App_方法二本地驗收模擬器.html</code>）進行四大臨床驗證：', body_style))
 story.append(Paragraph('• <b>A / AD 字母過濾驗證</b>：在藥品名稱輸入「A」，即時列出開頭為 A 的藥品；再鍵入「D」變成「AD」，清單瞬間收窄，反應時間 0.01 秒！', bullet_style))
-story.append(Paragraph('• <b>藥號即時帶出驗證</b>：隨意點選一項藥品（如 <code>ADI-PEG20 (40.25mg/V)針</code>），右側「藥品代碼」欄位瞬間自動填入 <code>10A000</code>，免除人工抄寫出錯。', bullet_style))
+story.append(Paragraph('• <b>藥號即時帶出驗證</b>：點選任一藥品（如 <code>ADI-PEG20 (40.25mg/V)針</code>），右側「藥品代碼」欄位瞬間自動填入 <code>10A000</code>，杜絕人工抄錯。', bullet_style))
 story.append(Paragraph('• <b>超量防呆警戒驗證</b>：在報廢數量輸入「60」，邊框瞬間變紅並彈出「⚠️ 數量超過 50 顆，請確認是否須提報專案審核」警示。', bullet_style))
 story.append(Paragraph('• <b>排版滿意度確認</b>：確認整體為純白醫療極簡風、無灰色重疊陰影、元件對齊方正。', bullet_style))
 
@@ -193,101 +193,94 @@ story.append(Paragraph('1. 藥師向 Agent 確認：「本地測試很順暢，�
 story.append(Paragraph('2. Agent 將本地驗收成功的邏輯轉換為微軟標準 <code>Src/App.fx.yaml</code> 與 <code>Src/MainScreen1.fx.yaml</code>。', bullet_style))
 story.append(Paragraph('3. 於終端機執行微軟官方打包指令：', bullet_style))
 story.append(Paragraph('<code>pac canvas pack --sources [原始碼目錄] --msapp 抗生素報廢管理App.msapp</code>', bullet_style))
-story.append(Paragraph('輸出微軟標準實體應用程式檔（約 62 KB），內部已封裝好完整的結構與連動定義。', body_style))
+story.append(Paragraph('輸出微軟標準實體應用程式檔（約 62 KB），內部已封裝好完整的幾何排版與連動定義。', body_style))
 
-story.append(Paragraph('步驟五：Power Apps 雲端載入與全院發布', h2_style))
-story.append(Paragraph('藥師開啟微軟 Power Apps 網頁，點選 <b>「開啟」➔「瀏覽這部電腦」</b> 選取剛剛打包好的 <code>抗生素報廢管理App.msapp</code>：', body_style))
+story.append(Paragraph('步驟五：Power Apps 雲端載入與發布', h2_style))
+story.append(Paragraph('藥師開啟微軟 Power Apps 網頁，點選 <b>「開啟」➔「瀏覽這部電腦」</b> 選取 <code>抗生素報廢管理App.msapp</code>：', body_style))
 story.append(Paragraph('• 整套雙欄排版、藥名下拉、藥號自動連動與數量警戒邏輯 <b>1 秒瞬間完整還原在雲端</b>！', bullet_style))
-story.append(Paragraph('• 藥師完全不需要在網頁上手動微調任何一個像素，直接點擊「儲存」並「發布」給全院同仁使用。', bullet_style))
+story.append(Paragraph('• 藥師無需在網頁上手動微調任何像素，直接點擊「儲存」並「發布」給全院同仁使用。', bullet_style))
 
-story.append(Spacer(1, 8))
+story.append(Spacer(1, 6))
+
+# 第二章：Teams 審核流程
+story.append(Paragraph('第二章：Microsoft Teams 主管審核與自適應卡片流程', h1_style))
+story.append(Paragraph('表單送出後，後端透過 Power Automate 串接奇美醫院 Teams 審核機制：', body_style))
+story.append(Paragraph('1. <b>自動化觸發</b>：當 SharePoint「報廢網頁」新增一筆報廢資料時，觸發流程。', bullet_style))
+story.append(Paragraph('2. <b>Teams 自適應卡片 (Adaptive Card) 推播</b>：系統向藥庫主管發送專屬卡片，清晰呈現申請人、藥名、藥號、數量及原因。', bullet_style))
+story.append(Paragraph('3. <b>一鍵快速簽核</b>：主管於手機或電腦 Teams 點擊「✅ 核准」或「❌ 退件」，審核狀態即時回寫 SharePoint。', bullet_style))
+story.append(Paragraph('4. <b>雙平台權限隔離</b>：藥庫團隊具備完整管理權限，業務會議平台團隊則設定為純唯讀安全瀏覽。', bullet_style))
 
 # 換頁進入第 3 頁
 story.append(PageBreak())
 
-# ==================== 第 3 頁：藥品報廢全院業務閉環與跨端整合 ====================
-story.append(Paragraph('第二章：藥劑科藥品報廢全院作業閉環（Teams + SharePoint + Power BI）', h1_style))
-story.append(Paragraph('前端表單透過方法二建置完成後，正式與後端審核流程串接，形成完整的醫療自動化閉環：', body_style))
+# ==================== 第 3 頁：Power BI 完整串接手把手教學 ====================
+story.append(Paragraph('第三章：如何將報廢資料庫完整串接到 Power BI？（手把手教學）', h1_style))
+story.append(Paragraph('將 SharePoint「報廢網頁」與「藥品主檔」串接至 Power BI，能將單純的表單紀錄升級為<b>「全院藥事管理決策戰情室」</b>。以下為標準操作步驟：', body_style))
 
-# 業務流程表格
-biz_flow = [
-    [Paragraph('<b>階段流程</b>', body_style), Paragraph('<b>執行角色與平台</b>', body_style), Paragraph('<b>自動化處理與技術核心</b>', body_style)],
+story.append(Paragraph('步驟一：在 Power BI Desktop 取得 SharePoint 清單資料', h2_style))
+story.append(Paragraph('1. 開啟 Power BI Desktop，點擊頂部常用工具列的 <b>「取得資料」➔「更多...」</b>。', bullet_style))
+story.append(Paragraph('2. 在搜尋框輸入「SharePoint」，選取 <b>「SharePoint 現代清單 (SharePoint Online List)」</b>，點擊「連線」。', bullet_style))
+story.append(Paragraph('3. <b>輸入網站 URL</b>：輸入奇美醫院 Teams 關聯站台網址：', bullet_style))
+story.append(Paragraph('<code>https://cmh2400.sharepoint.com/sites/msteams_d944ec</code>', bullet_style))
+story.append(Paragraph('4. <b>驗證身分</b>：選擇左側「組織帳戶 (Microsoft 365)」，登入奇美醫院帳號（如 <code>B305W2@chimei.org.tw</code>）。', bullet_style))
+story.append(Paragraph('5. <b>選取資料表</b>：勾選 <code>報廢網頁</code>（填報紀錄）與 <code>藥品主檔</code>（3,427 筆主檔），點擊「轉換資料」進入 Power Query。', bullet_style))
+
+story.append(Paragraph('步驟二：Power Query 欄位清理與資料正規化', h2_style))
+story.append(Paragraph('1. <b>展開關聯欄位</b>：在「報廢網頁」中，將藥品名稱、報廢原因等 Choice / LookUp 欄位點擊右上角展開圖示，選取 <code>Value</code>。', bullet_style))
+story.append(Paragraph('2. <b>轉換資料型態</b>：', bullet_style))
+story.append(Paragraph('• 將「報廢數量」設定為 <b>整數 (Int64)</b>。', bullet_style))
+story.append(Paragraph('• 將「報廢日期」設定為 <b>日期 (Date)</b>。', bullet_style))
+story.append(Paragraph('• 將「審核狀態」、「病房號碼」、「藥品代碼」維持 <b>文字 (Text)</b>。', bullet_style))
+story.append(Paragraph('3. <b>建立主外鍵關聯</b>：點擊「關閉並套用」，在模型檢視中將「報廢網頁」的 <code>藥品代碼</code> 拖曳關聯至「藥品主檔」的 <code>Title (藥號)</code>，形成 1:N 星狀模型。', bullet_style))
+
+story.append(Paragraph('步驟三：建立臨床報廢戰情儀表板三大核心指標', h2_style))
+
+pbi_data = [
+    [Paragraph('<b>視覺效果圖表</b>', body_style), Paragraph('<b>配置欄位與 DAX 公式</b>', body_style), Paragraph('<b>臨床管理價值</b>', body_style)],
     [
-        Paragraph('<b>1. 填報申請</b>', body_style),
-        Paragraph('病房/藥庫藥師<br/>(Power Apps / Teams)', body_style),
-        Paragraph('同仁於 Teams 索引標籤開啟 App，選取藥品自動帶出藥號，系統自動連動當日報廢日期，送出後寫入 SharePoint 清單。', body_style)
+        Paragraph('<b>KPI 卡片：總報廢量</b>', body_style),
+        Paragraph('<code>總報廢數量 = SUM(\'報廢網頁\'[報廢數量])</code>', body_style),
+        Paragraph('即時掌握全院本月或各病房目前累積之藥品耗損總量。', body_style)
     ],
     [
-        Paragraph('<b>2. 主管審核</b>', body_style),
-        Paragraph('藥庫主管 / 主任<br/>(Teams 自適應卡片)', body_style),
-        Paragraph('Power Automate 捕捉新增項目，自動向主管 Teams 機器人發送 Adaptive Card。主管在手機或電腦 Teams 點擊「核准/退件」直接完成簽核。', body_style)
+        Paragraph('<b>條形圖：高耗損排行</b>', body_style),
+        Paragraph('Y 軸：藥品名稱<br/>X 軸：報廢數量（依數量降冪排列 Top 10）', body_style),
+        Paragraph('一眼看出全院耗損最嚴重的藥品品項，優先介入管控。', body_style)
     ],
     [
-        Paragraph('<b>3. 權限隔離</b>', body_style),
-        Paragraph('跨團隊安全防護<br/>(微軟雲端環境)', body_style),
-        Paragraph('藥庫主管（全權限）可審核與變更；會議同仁僅限唯讀瀏覽。若非藥庫人員登入，送出與編輯按鈕自動隱藏或反灰。', body_style)
+        Paragraph('<b>環形圖：報廢原因分析</b>', body_style),
+        Paragraph('圖例：報廢原因<br/>值：項目計數（逾期/破損/換藥退回）', body_style),
+        Paragraph('精準釐清是「逾期失效」多還是「臨床退藥」多，利於評鑑檢討。', body_style)
     ],
     [
-        Paragraph('<b>4. 戰情分析</b>', body_style),
-        Paragraph('科主任 / 品保小組<br/>(Power BI 儀表板)', body_style),
-        Paragraph('將報廢資料排程重新整理至 Power BI，統計「月度報廢金額、抗生素損耗佔比、各病房異常提報頻次」，並可在報表內反向操作 App。', body_style)
+        Paragraph('<b>矩陣表：超量專案清單</b>', body_style),
+        Paragraph('列：病房、申請人、日期；篩選：報廢數量 > 50', body_style),
+        Paragraph('列出所有單次報廢大於 50 顆之異常明細，供主任審核複查。', body_style)
     ]
 ]
-t_biz = Table(biz_flow, colWidths=[90, 130, 267])
-t_biz.setStyle(TableStyle([
+t_pbi = Table(pbi_data, colWidths=[110, 230, 147])
+t_pbi.setStyle(TableStyle([
     ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#005A9E')),
     ('TEXTCOLOR', (0,0), (-1,0), colors.white),
     ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#CBD5E1')),
     ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor('#F8FAFC')]),
-    ('TOPPADDING', (0,0), (-1,-1), 5),
-    ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+    ('TOPPADDING', (0,0), (-1,-1), 4.5),
+    ('BOTTOMPADDING', (0,0), (-1,-1), 4.5),
     ('LEFTPADDING', (0,0), (-1,-1), 6),
     ('RIGHTPADDING', (0,0), (-1,-1), 6),
 ]))
-story.append(t_biz)
-story.append(Spacer(1, 10))
+story.append(t_pbi)
+story.append(Spacer(1, 6))
 
-story.append(Paragraph('第三章：方法二核心技術公式與防呆解析 (Power Fx)', h1_style))
+story.append(Paragraph('步驟四：在 Power BI 內反向嵌入 Power Apps（作業與分析二合一）', h2_style))
+story.append(Paragraph('1. 在 Power BI 視覺效果窗格點擊 <b>「Power Apps」</b> 圖示。', bullet_style))
+story.append(Paragraph('2. 將資料表中的 <code>藥品代碼</code>、<code>ID</code> 拖入 PowerApps 資料欄位中。', bullet_style))
+story.append(Paragraph('3. 於畫面內選擇已發布之「抗生素報廢管理 App」：', bullet_style))
+story.append(Paragraph('• <b>雙向閉環神效</b>：主管在 Power BI 點選某一筆異常報廢藥品，嵌入的 Power Apps 畫面會 <b>「連動過濾出該筆申請」</b>，主管可直接在 Power BI 報表內點選「專案核准」或填寫意見，無需在系統間來回切換！', body_style))
 
-tech_data = [
-    [Paragraph('<b>功能模組</b>', body_style), Paragraph('<b>關鍵 Power Fx 公式</b>', body_style), Paragraph('<b>臨床防呆與效益說明</b>', body_style)],
-    [
-        Paragraph('<b>字母排序快篩</b><br/>(ComboBox Items)', body_style),
-        Paragraph('<code>Sort(Distinct(\'藥品主檔\', \'藥品學名\'), Value, SortOrder.Ascending)</code>', body_style),
-        Paragraph('支援英文字母 A/AD 依序過濾，自動去重並維持字母升冪，3427 筆藥品秒速搜尋。', body_style)
-    ],
-    [
-        Paragraph('<b>藥號單向連動</b><br/>(代碼 Default)', body_style),
-        Paragraph('<code>Coalesce(LookUp(\'藥品主檔\', \'藥品學名\' = ComboBox1.Selected.Value).Title, Parent.Default)</code>', body_style),
-        Paragraph('藥名一旦選定，藥號精準帶出；自身 Default 不反向依賴，徹底杜絕循環參考死穴。', body_style)
-    ],
-    [
-        Paragraph('<b>強制動態刷新</b><br/>(ComboBox OnChange)', body_style),
-        Paragraph('<code>Reset(DataCardValue1)</code>', body_style),
-        Paragraph('換藥時強制清除代碼快取，確保畫面與資料庫數值 100% 同步更新。', body_style)
-    ],
-    [
-        Paragraph('<b>數量超額警示</b><br/>(Border & Warning)', body_style),
-        Paragraph('<code>BorderColor: If(Value(Self.Text) > 50, Color.Red, RGBA(206,212,218,1))</code>', body_style),
-        Paragraph('單次填寫超過 50 顆瞬間跳紅框，提醒同仁須走專案主管核准程序。', body_style)
-    ]
-]
-t_tech = Table(tech_data, colWidths=[110, 240, 137])
-t_tech.setStyle(TableStyle([
-    ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#005A9E')),
-    ('TEXTCOLOR', (0,0), (-1,0), colors.white),
-    ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#CBD5E1')),
-    ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor('#F8FAFC')]),
-    ('TOPPADDING', (0,0), (-1,-1), 5),
-    ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-    ('LEFTPADDING', (0,0), (-1,-1), 6),
-    ('RIGHTPADDING', (0,0), (-1,-1), 6),
-]))
-story.append(t_tech)
-story.append(Spacer(1, 10))
-
-story.append(Paragraph('【總結：臨床自動化推動建議】', h1_style))
-story.append(Paragraph('採用「方法二（本地模擬驗收 ➔ PAC CLI 打包 ➔ 雲端一次發布）」為藥劑科帶來了三大革命性改變：<b>① 臨床人員完全不必學程式，只要口述與確認體驗；② 大量藥品資料與連動在本地 0.01 秒完成驗收，不用忍受雲端延遲；③ 微軟官方標準工具鏈確保 100% 相容性</b>。這套標準作業流程，將是奇美醫院智慧醫療表單現代化的最佳實踐範本！', body_style))
+story.append(Spacer(1, 6))
+story.append(Paragraph('【總結】', h1_style))
+story.append(Paragraph('從本地端 0.01 秒模擬驗證、PAC CLI 標準封裝，到 Teams 自適應卡片審核與 Power BI 視覺化儀表板串接，佳里奇美醫院藥劑科已完整實現<b>「前端填報敏捷化 · 中端審核自動化 · 後端分析智慧化」</b>的現代醫療資訊標準架構！', body_style))
 
 doc.build(story, canvasmaker=NumberedCanvas)
-print('Updated PDF generated successfully!')
+print('Comprehensive PDF with Power BI Integration generated successfully!')

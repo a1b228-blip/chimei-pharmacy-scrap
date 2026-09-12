@@ -5,3 +5,4 @@ desktop.ini
 *.key
 credentials.*
 .DS_Store
+test_unpack/

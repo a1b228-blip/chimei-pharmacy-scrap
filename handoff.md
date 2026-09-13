@@ -20,19 +20,20 @@
 
 ## 🚦 目前狀態
 - 前端 Power Apps 與後端 SharePoint、Power Automate、Teams、Power BI 之五星閉環架構已全線連通。
-- 本地 Code-First 開發流程（口述需求 ➔ 本機高傳真模擬驗收 ➔ PAC CLI 打包 ➔ 雲端發布）已完整驗收通過。
-- PRN (Pro Re Nata) 智慧導航版面定位與跨防火牆作業模式已完成標準手冊化。
-- 本地 Git 工作目錄完全乾淨，所有成果已完成 Commit 保存。
+- 專案程式碼與 HTML 網頁版已正式推送到 GitHub 遠端儲存庫，並啟用 GitHub Pages 供線上即時操作。
+- 藥品清冊以 `藥品藥號.xlsx` 基準補齊至全院 3,436 筆，雙向秒搜與 Teams 自適應審核卡片完整實裝。
 
 ## ➡️ 下一步
-1. 依照 `PRN醫療自動化智慧導航版面整合指南.pdf` 指引，將打包好的 `抗生素報廢管理App.msapp` 帶入醫院內網 Power Apps 載入發布。
-2. 將表單釘選至院內 Teams 頻道與 PRN 智慧導航首頁，並依據手冊設定 Power BI 戰情儀表板排程重新整理。
+1. 透過 GitHub Pages 網址或 SharePoint 連結將系統嵌入院內 Teams 頻道頂部索引標籤。
+2. 藥師填寫報廢單後，測試 Teams「測試」頻道的審核卡片核准與駁回流程。
 
 ## ⚠️ 注意事項
+- GitHub 儲存庫：`https://github.com/a1b228-blip/chimei-pharmacy-scrap`
+- 線上直接操作網址 (GitHub Pages)：`https://a1b228-blip.github.io/chimei-pharmacy-scrap/`
 - 目前設定之藥庫管理主管帳號為 `B305W2@chimei.org.tw`（藥劑科_侯孝真）。
-- 本地未啟用遠端 git repo，本地 git 追蹤完整（共 14 次 Commit）。
 
 ## 🕐 最後更新
-- 時間：2026-09-13 00:25
+- 時間：2026-09-14 06:44
 - 更新者：Google Antigravity @ jiangruiyideMacBook-Air.local
-- Git push 狀態：本地完整追蹤（未設定遠端 remote）
+- Git push 狀態：已成功推送到 origin/main，啟用 GitHub Pages
+

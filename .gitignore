@@ -6,3 +6,7 @@ desktop.ini
 credentials.*
 .DS_Store
 test_unpack/
+test_static_pack/
+test_static.msapp
+wiki_chimei.html
+*.py

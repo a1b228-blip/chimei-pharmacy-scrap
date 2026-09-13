@@ -585,7 +585,7 @@ Screens:
                                                 HoverFill: =RGBA(255, 255, 255, 1)
                                                 MaxLength: =Parent.MaxLength
                                                 OnChange: |-
-                                                  =If(!IsBlank(Self.Text), With({ matched: LookUp(colDrugMaster, Title = Self.Text) }, If(!IsBlank(matched.藥品學名), UpdateContext({ locDrugName: matched.藥品學名, locDrugCode: Self.Text }); Reset(ComboBox1))))
+                                                  =If(!IsBlank(Self.Text), With({ matched: LookUp('藥品主檔', 藥號 = Self.Text || Title = Self.Text) }, If(!IsBlank(matched.藥品學名), UpdateContext({ locDrugName: matched.藥品學名, locDrugCode: Self.Text }); Reset(ComboBox1))), UpdateContext({ locDrugName: "", locDrugCode: "" }); Reset(ComboBox1))
                                                 PaddingLeft: =5
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
@@ -771,19 +771,19 @@ Screens:
                                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                                 DisabledColor: =RGBA(161, 159, 157, 1)
                                                 DisabledFill: =RGBA(242, 242, 241, 0)
-                                                DisplayFields: =["Value"]
+                                                DisplayFields: =["藥品學名"]
                                                 Font: =Font.'Segoe UI'
                                                 HoverBorderColor: =RGBA(16, 110, 190, 1)
                                                 HoverColor: =RGBA(50, 49, 48, 1)
                                                 HoverFill: =RGBA(245, 245, 245, 1)
                                                 Items: |-
-                                                  =Sort(Distinct(colDrugMaster, 藥品學名), Value, SortOrder.Ascending)
+                                                  =Sort(Filter('藥品主檔', IsBlank(Self.SearchText) || StartsWith(藥品學名, Self.SearchText) || StartsWith(藥號, Self.SearchText) || Self.SearchText in 藥品學名), 藥品學名, SortOrder.Ascending)
                                                 OnChange: |-
-                                                  =UpdateContext({ locDrugCode: LookUp(colDrugMaster, 藥品學名 = Self.Selected.Value).Title, locDrugName: Self.Selected.Value }); Reset(DataCardValue1)
+                                                  =UpdateContext({ locDrugCode: Self.Selected.藥號, locDrugName: Self.Selected.藥品學名 }); Reset(DataCardValue1)
                                                 PressedBorderColor: =RGBA(16, 110, 190, 1)
                                                 PressedColor: =RGBA(255, 255, 255, 1)
                                                 PressedFill: =RGBA(0, 120, 212, 1)
-                                                SearchFields: =["Value"]
+                                                SearchFields: =["藥品學名", "藥號"]
                                                 SelectMultiple: |
                                                   =false
                                                 SelectionColor: =RGBA(255, 255, 255, 1)

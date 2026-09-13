@@ -1,0 +1,17 @@
+App As appinfo:
+    OnStart: |-
+        =Concurrent(
+            ClearCollect(colBatch1, Filter('藥品主檔', ID <= 2000)),
+            ClearCollect(colBatch2, Filter('藥品主檔', ID > 2000))
+        );
+        ClearCollect(colDrugMaster, colBatch1, colBatch2)
+    BackEnabled: =true
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+

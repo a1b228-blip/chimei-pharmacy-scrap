@@ -643,7 +643,7 @@ MainScreen1 As screen:
                                 Default: |
                                     =Coalesce(locDrugCode, Parent.Default)
                                 DelayOutput: =true
-                                OnChange: =If(!IsBlank(Self.Text), With({ matched: LookUp('藥品主檔', 藥號 = Self.Text || Title = Self.Text) }, If(!IsBlank(matched.藥品學名), UpdateContext({ locDrugName: matched.藥品學名, locDrugCode: Self.Text }); Reset(ComboBox1))), UpdateContext({ locDrugName: "", locDrugCode: "" }); Reset(ComboBox1))
+                                OnChange: =If(!IsBlank(Self.Text), UpdateContext({ locDrugRecord: LookUp('藥品主檔', Lower(藥號) = Lower(Trim(Self.Text))) }); If(!IsBlank(locDrugRecord.藥品學名), UpdateContext({ locDrugCode: locDrugRecord.藥號 }); Reset(ComboBox1), Notify("查無此藥品代碼！", NotificationType.Warning)), UpdateContext({ locDrugRecord: Blank(), locDrugCode: "" }); Reset(ComboBox1))
                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                 DisabledColor: =RGBA(161, 159, 157, 1)
                                 DisabledFill: =RGBA(242, 242, 241, 0)
@@ -855,22 +855,23 @@ MainScreen1 As screen:
                                 ChevronHoverBackground: =RGBA(245, 245, 245, 1)
                                 ChevronHoverFill: =RGBA(50, 49, 48, 1)
                                 Color: =RGBA(50, 49, 48, 1)
-                                DefaultSelectedItems: =If(!IsBlank(locDrugName), Filter('藥品主檔', 藥品學名 = locDrugName), If(!IsBlank(Parent.Default), Filter('藥品主檔', 藥品學名 = Parent.Default), []))
+
                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                 DisabledColor: =RGBA(161, 159, 157, 1)
                                 DisabledFill: =RGBA(242, 242, 241, 0)
+                                DefaultSelectedItems: =If(!IsBlank(locDrugRecord), [locDrugRecord], If(!IsBlank(Parent.Default), Filter('藥品主檔', 藥品學名 = Parent.Default), []))
                                 DisplayFields: =["藥品學名"]
                                 Font: =Font.'Segoe UI'
                                 HoverBorderColor: =RGBA(16, 110, 190, 1)
                                 HoverColor: =RGBA(50, 49, 48, 1)
                                 HoverFill: =RGBA(245, 245, 245, 1)
-                                Items: =Sort(Filter('藥品主檔', IsBlank(Self.SearchText) || StartsWith(藥品學名, Self.SearchText) || StartsWith(藥號, Self.SearchText) || Self.SearchText in 藥品學名), 藥品學名, SortOrder.Ascending)
-                                OnChange: |-
-                                    =UpdateContext({ locDrugCode: Self.Selected.藥號, locDrugName: Self.Selected.藥品學名 }); Reset(DataCardValue1)
+                                IsSearchable: =true
+                                Items: =Sort('藥品主檔', 藥品學名, SortOrder.Ascending)
+                                OnChange: =UpdateContext({ locDrugRecord: Self.Selected, locDrugCode: Self.Selected.藥號 }); Reset(DataCardValue1)
                                 PressedBorderColor: =RGBA(16, 110, 190, 1)
                                 PressedColor: =RGBA(255, 255, 255, 1)
                                 PressedFill: =RGBA(3, 110, 183, 1)
-                                SearchFields: =["藥品學名", "藥號"]
+                                SearchFields: =["藥品學名"]
                                 SearchItems: =Search(Sort('藥品主檔', 藥品學名, SortOrder.Ascending), ComboBox1.SearchText, "藥品學名", "藥號")
                                 SelectionFill: =RGBA(3, 110, 183, 1)
                                 SelectMultiple: |

@@ -1,0 +1,1167 @@
+Screens:
+  MainScreen1:
+    Properties:
+      Fill: =RGBA(244, 246, 249, 1)
+      LoadingSpinnerColor: =RGBA(3, 110, 183, 1)
+      OnVisible: |-
+        =If(IsEmpty(colDrugMaster),
+            ClearCollect(
+                colDrugMaster,
+                Table(
+                {
+                    藥號: "10A000",
+                    藥品名稱: "ADI-PEG20 (40.25mg/V)針.恩慈"
+                },
+                {
+                    藥號: "10A017",
+                    藥品名稱: "Human Albumin(20%)50ml針"
+                },
+                {
+                    藥號: "10A110",
+                    藥品名稱: "Albumin Human(25%)針 50ml"
+                },
+                {
+                    藥號: "10A144",
+                    藥品名稱: "Aflibercept雙眼(4mg/0.1mL/V)針"
+                },
+                {
+                    藥號: "10A145",
+                    藥品名稱: "Aflibercept(左眼用4mg/0.1mL/V)"
+                },
+                {
+                    藥號: "10A146",
+                    藥品名稱: "Aflibercept(右眼用4mg/0.1mL/V)"
+                },
+                {
+                    藥號: "10A152",
+                    藥品名稱: "Asparaginase L( 10,000 IU)針."
+                },
+                {
+                    藥號: "10A160",
+                    藥品名稱: "Aflibercept 4mg/0.1ml針.贈藥"
+                },
+                {
+                    藥號: "10A178",
+                    藥品名稱: "Atezolizumab(1200mg/20mL)針"
+                },
+                {
+                    藥號: "10A194",
+                    藥品名稱: "Aflibercept(100mg/4ml)針.贈藥"
+                },
+                {
+                    藥號: "10A218",
+                    藥品名稱: "Azacitidine (100mg/V) 針."
+                },
+                {
+                    藥號: "10A226",
+                    藥品名稱: "Atezolizumab(1200mg/20ml)針.贈"
+                },
+                {
+                    藥號: "10A235",
+                    藥品名稱: "Agalsidase beta (35mg/V)針"
+                },
+                {
+                    藥號: "10A243",
+                    藥品名稱: "Avelumab (200mg/10mL/V)針"
+                },
+                {
+                    藥號: "10A251",
+                    藥品名稱: "Atezolizumab (840mg/14mL/V)針"
+                },
+                {
+                    藥號: "10A259",
+                    藥品名稱: "Avelumab贈藥(200mg/V)針."
+                },
+                {
+                    藥號: "10A267",
+                    藥品名稱: "Amivantamab(350mg/7ml)針.自費"
+                },
+                {
+                    藥號: "10A275",
+                    藥品名稱: "AdaliMumab(40mg)(Mylan)針"
+                },
+                {
+                    藥號: "10A283",
+                    藥品名稱: "Agalsidase Alfa(3.5mg/3.5ml)針"
+                },
+                {
+                    藥號: "10A291",
+                    藥品名稱: "Avalglucosidase alfa(100mg/V)"
+                },
+                {
+                    藥號: "10A298",
+                    藥品名稱: "AdaliMumab(40mg/0.8ml/pen)針劑"
+                },
+                {
+                    藥號: "10A306",
+                    藥品名稱: "Amivantamab 贈藥(350mg/7ml)針."
+                },
+                {
+                    藥號: "10A314",
+                    藥品名稱: "Aflibercept 雙眼(8mg/0.07mL/V)"
+                },
+                {
+                    藥號: "10A315",
+                    藥品名稱: "Aflibercept贈藥(8mg/0.07mL/V)"
+                },
+                {
+                    藥號: "10A316",
+                    藥品名稱: "Aflibercept 左眼(8mg/0.07mL/V)"
+                },
+                {
+                    藥號: "10A317",
+                    藥品名稱: "Aflibercept 右眼(8mg/0.07mL/V)"
+                },
+                {
+                    藥號: "10A325",
+                    藥品名稱: "Anifrolumab (300mg/2ml/V)針"
+                },
+                {
+                    藥號: "10A333",
+                    藥品名稱: "Arginine deiminase(38.5mg/V)恩"
+                },
+                {
+                    藥號: "10AD01",
+                    藥品名稱: "Peginterferon beta-1a(63+94mcg"
+                },
+                {
+                    藥號: "10B006",
+                    藥品名稱: "Bamlanivimab(700mg/20mL/V)針"
+                },
+                {
+                    藥號: "10B058",
+                    藥品名稱: "Brodalumab (210mg/1.5mL/A)針"
+                },
+                {
+                    藥號: "10B064",
+                    藥品名稱: "Bleomycin(15mg)針."
+                },
+                {
+                    藥號: "10B072",
+                    藥品名稱: "Botulinum Toxin ( 100IU/V) 針."
+                },
+                {
+                    藥號: "10B149",
+                    藥品名稱: "Bacillus Calmette-Guerin(81mg)"
+                },
+                {
+                    藥號: "10B159",
+                    藥品名稱: "Bendamustine100mg針.贈藥"
+                },
+                {
+                    藥號: "10B167",
+                    藥品名稱: "Brentuximab 50mg針.贈藥"
+                },
+                {
+                    藥號: "10B175",
+                    藥品名稱: "Belimumab(120mg/v)針.注意劑量"
+                },
+                {
+                    藥號: "10B183",
+                    藥品名稱: "Belimumab(400mg/v)針.注意劑量"
+                },
+                {
+                    藥號: "10B191",
+                    藥品名稱: "Blinatumomab (35mcg/V)"
+                },
+                {
+                    藥號: "10B199",
+                    藥品名稱: "Blinatumomab (35mcg/V)贈藥."
+                },
+                {
+                    藥號: "10B207",
+                    藥品名稱: "Bevacizumab (100mg/V)針.贈藥"
+                },
+                {
+                    藥號: "10B215",
+                    藥品名稱: "Factor II/VII/IX/X (2,7,9,10)"
+                },
+                {
+                    藥號: "10B223",
+                    藥品名稱: "Benralizumab (30mg/1mL/A)針"
+                },
+                {
+                    藥號: "10B231",
+                    藥品名稱: "Bacillus Calmette-Gu(40mg)針"
+                },
+                {
+                    藥號: "10B233",
+                    藥品名稱: "Brolucizumab(19.8mg/0.165ml/針"
+                },
+                {
+                    藥號: "10B239",
+                    藥品名稱: "Bevacizumab(100mg)(Amgen)針"
+                },
+                {
+                    藥號: "10B247",
+                    藥品名稱: "Bevacizumab(100mg)(Amgen)針.贈"
+                },
+                {
+                    藥號: "10B255",
+                    藥品名稱: "Brolucizumab(19.8mg/0.165ml/針"
+                },
+                {
+                    藥號: "10B263",
+                    藥品名稱: "Botulinum Type A(500IU/V) 針."
+                },
+                {
+                    藥號: "10B271",
+                    藥品名稱: "Bevacizumab-賽特(100mg)針"
+                },
+                {
+                    藥號: "10B275",
+                    藥品名稱: "Bevacizumab-賽特(400mg)針(大劑"
+                },
+                {
+                    藥號: "10B279",
+                    藥品名稱: "Bevacizumab (100mg/4ml)針.(柳"
+                },
+                {
+                    藥號: "10B287",
+                    藥品名稱: "Becotatug Vedotin(50mg/V)恩慈"
+                },
+                {
+                    藥號: "10C008",
+                    藥品名稱: "Casirivimab(1332mg/11.1mL)針"
+                },
+                {
+                    藥號: "10C037",
+                    藥品名稱: "Copanlisib (60mg/V)針.自費"
+                },
+                {
+                    藥號: "10C045",
+                    藥品名稱: "Cytarabine (1000mg/10ml)針"
+                },
+                {
+                    藥號: "10C061",
+                    藥品名稱: "Copanlisib (60mg/V)針.贈藥"
+                },
+                {
+                    藥號: "10C191",
+                    藥品名稱: "Cyclophosphamide (500mg)針."
+                },
+                {
+                    藥號: "10C249",
+                    藥品名稱: "Carfilzomib (60mg/vial)針"
+                },
+                {
+                    藥號: "10C257",
+                    藥品名稱: "Carfilzomib (60mg/vial)針.贈藥"
+                },
+                {
+                    藥號: "10C267",
+                    藥品名稱: "Cetuximab (5mg/ml,20ml)針.贈藥"
+                },
+                {
+                    藥號: "10C275",
+                    藥品名稱: "Carfilzomib (30mg/vial)針"
+                },
+                {
+                    藥號: "10C283",
+                    藥品名稱: "Certolizumab pegol(200 mg/ml)"
+                },
+                {
+                    藥號: "10C290",
+                    藥品名稱: "Cabazitaxel (60mg/1.5ml)針.(柳"
+                },
+                {
+                    藥號: "10D007",
+                    藥品名稱: "Decitabine(50mg/V)針"
+                },
+                {
+                    藥號: "10D042",
+                    藥品名稱: "Water for inj. (20ml/A) 針."
+                },
+                {
+                    藥號: "10D050",
+                    藥品名稱: "Water for inj. (10ml/A) 針."
+                },
+                {
+                    藥號: "10D111",
+                    藥品名稱: "Denosumab(120mg/1.7ml/V)針."
+                },
+                {
+                    藥號: "10D116",
+                    藥品名稱: "Daratumumab(400mg/20ml/V)針.恩"
+                },
+                {
+                    藥號: "10D124",
+                    藥品名稱: "Docetaxel(S) (20mg/V)針"
+                },
+                {
+                    藥號: "10D132",
+                    藥品名稱: "Daratumumab(100mg/V)針"
+                },
+                {
+                    藥號: "10D140",
+                    藥品名稱: "Daratumumab(400mg/V)針"
+                },
+                {
+                    藥號: "10D148",
+                    藥品名稱: "Daratumumab贈藥(400mg/20ml/via"
+                },
+                {
+                    藥號: "10D156",
+                    藥品名稱: "Daratumumab(100mg/vial)恩慈"
+                },
+                {
+                    藥號: "10D164",
+                    藥品名稱: "Durvalumab (500mg/10ml/v)針.恩"
+                },
+                {
+                    藥號: "10D172",
+                    藥品名稱: "Daratumumab贈藥(100mg/vial)"
+                },
+                {
+                    藥號: "10D180",
+                    藥品名稱: "Dextran 40 (10%,500ml/bt)"
+                },
+                {
+                    藥號: "10D188",
+                    藥品名稱: "Durvalumab(500mg/V)針."
+                },
+                {
+                    藥號: "10D196",
+                    藥品名稱: "Durvalumab(120mg/V)針.自費"
+                },
+                {
+                    藥號: "10D204",
+                    藥品名稱: "Durvalumab贈藥(500mg/V)針."
+                },
+                {
+                    藥號: "10D212",
+                    藥品名稱: "Durvalumab(120mg/V)針.贈藥"
+                },
+                {
+                    藥號: "10D220",
+                    藥品名稱: "Decitabine贈藥(50mg/V)針"
+                },
+                {
+                    藥號: "10D228",
+                    藥品名稱: "Daratumumab贈藥(100mg/V)針."
+                },
+                {
+                    藥號: "10D236",
+                    藥品名稱: "Daratumumab(1800mg/15ml)針."
+                },
+                {
+                    藥號: "10D238",
+                    藥品名稱: "Daratumumab贈藥(1800mg/15ml)針"
+                },
+                {
+                    藥號: "10D244",
+                    藥品名稱: "Donanemab (350mg/20ml)針.自費"
+                },
+                {
+                    藥號: "10D246",
+                    藥品名稱: "Donanemab (350mg/20ml)針.贈藥"
+                },
+                {
+                    藥號: "10D252",
+                    藥品名稱: "Datopotamab (100mg)針.自費"
+                },
+                {
+                    藥號: "10D254",
+                    藥品名稱: "Datopotamab (100mg)針.贈藥"
+                },
+                {
+                    藥號: "10D262",
+                    藥品名稱: "Denosumab(120mg/ml,1.7ml/V)針"
+                },
+                {
+                    藥號: "10D264",
+                    藥品名稱: "Denosumab(60mg/ml,1ml/A)針."
+                },
+                {
+                    藥號: "10D266",
+                    藥品名稱: "Denosumab(60mg/ml,1ml/A)針."
+                },
+                {
+                    藥號: "10E015",
+                    藥品名稱: "Etesevimab(700mg/20mL/V)針"
+                },
+                {
+                    藥號: "10E081",
+                    藥品名稱: "Etanercept(25mg)針."
+                },
+                {
+                    藥號: "10E118",
+                    藥品名稱: "Eculizumab(300mg/30ml)針."
+                },
+                {
+                    藥號: "10E120",
+                    藥品名稱: "Eculizumab 贈藥(300mg/30ml)針."
+                },
+                {
+                    藥號: "10E126",
+                    藥品名稱: "Vedolizumab (300mg/V)針."
+                },
+                {
+                    藥號: "10E134",
+                    藥品名稱: "Epirubicin HCl(P)(10mg/V)針.自"
+                },
+                {
+                    藥號: "10E142",
+                    藥品名稱: "Vedolizumab 贈藥(300mg/V)針."
+                },
+                {
+                    藥號: "10E150",
+                    藥品名稱: "Tixagevimab/Cilgavimab(150/150"
+                }
+                )
+            )
+        );
+        If(IsEmpty(colHistoryRecords),
+            ClearCollect(
+                colHistoryRecords,
+                Table(
+                    { id: 1001, code: "10A000", name: "10A000 · ADI-PEG20 (40.25mg/V)針.恩慈", date: "2026-09-08", applicant: "江睿益 (B305W2)", reviewer: "陳藥師", warehouseReviewer: "林庫管", lot: "LOT-202608A", qty: 2, reason: "藥品過期", remarks: "病房常備藥品逾期退回", status: "主管已核准" },
+                    { id: 1002, code: "39A019", name: "39A019 · Aminophylline(250mg)針", date: "2026-09-09", applicant: "江睿益 (B305W2)", reviewer: "黃藥師", warehouseReviewer: "王庫管", lot: "LOT-99881", qty: 5, reason: "包裝破損 / 變質", remarks: "外盒受潮破損，確保安全申請報廢", status: "主管已核准" },
+                    { id: 1003, code: "56M015", name: "56M015 · Magvac(250ml)鎂福內服液", date: "2026-09-10", applicant: "江睿益 (B305W2)", reviewer: "李藥師", warehouseReviewer: "張庫管", lot: "MG-2025", qty: 12, reason: "冷藏失效 / 溫控異常", remarks: "溫控紀錄警報，依SOP整批送審報廢", status: "主管已核准" }
+                )
+            )
+        )
+    Children:
+      - HeaderRect:
+          Control: Rectangle
+          Properties:
+            BorderColor: =RGBA(0, 0, 255, 1)
+            Fill: =RGBA(2, 75, 125, 1)
+            Height: =64
+            Width: =Parent.Width
+      - SystemMainTitleLabel:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =56
+            Size: =20
+            Text: ="藥劑科報廢流程管理系統"
+            Width: =329
+            X: =27
+            Y: =4
+      - BtnSubmit:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Fill: =RGBA(16, 124, 65, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =38
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =Self.Color
+            HoverFill: =RGBA(11, 90, 47, 1)
+            OnSelect: |+
+              =If(
+                  IsBlank(Input_DrugCode.Text) || IsBlank(Input_Quantity.Text) || IsBlank(Input_LotNumber.Text),
+                  Notify("請完整填寫必填欄位 (藥號、批號、數量)！", NotificationType.Error),
+                  UpdateContext({
+                      varCurrentSerial: Text(Today(), "yyyymmdd") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), "yyyy-mm-dd"))) + 1, "000")
+                  });
+                  Collect(
+                      colHistoryRecords,
+                      {
+                          id: Value(varCurrentSerial),
+                          serialNo: varCurrentSerial,
+                          code: Input_DrugCode.Text,
+                          name: Coalesce(Combo_DrugName.Selected.藥品學名, locDrugRecord.藥品學名, Input_DrugCode.Text),
+                          date: Input_ScrapDate.Text,
+                          applicant: Input_Applicant.Text,
+                          reviewer: Input_Reviewer.Text,
+                          warehouseReviewer: Input_WarehouseReviewer.Text,
+                          lot: Input_LotNumber.Text,
+                          qty: Value(Input_Quantity.Text),
+                          reason: Coalesce(Combo_Reason.Selected.Value, "其他原因"),
+                          remarks: Input_Remarks.Text,
+                          status: "待主管審核"
+                      }
+                  );
+                  Notify("報廢申請單已成功儲存！單號：" & varCurrentSerial, NotificationType.Success)
+              )
+
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Text: |-
+              ="💾 儲存並發送審核 "
+            Width: =230
+            X: =1106
+            Y: =70
+      - SidebarHeaderRect:
+          Control: Rectangle
+          Properties:
+            BorderColor: =RGBA(226, 232, 240, 1)
+            BorderThickness: =1
+            Fill: =RGBA(250, 249, 248, 1)
+            Height: =46
+            Width: =300
+            Y: =64
+      - SidebarTitleLabel:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(32, 31, 30, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Size: =14
+            Text: ="報廢紀錄清單"
+            Width: =160
+            X: =16
+            Y: =74
+      - FormCardContainer:
+          Control: Rectangle
+          Properties:
+            BorderColor: =RGBA(226, 232, 240, 1)
+            BorderThickness: =1
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =608
+            Width: =1031
+            X: =305
+            Y: =110
+      - FormHeaderTitle:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(32, 31, 30, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: |
+              =550
+            Height: =29
+            Size: =18
+            Text: "=If(\n    varIsNewMode,\n    \"藥品報廢申請單 (單號: \" & Text(Today(), \"yyyymmdd\") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), \"yyyy-mm-dd\"))) + 1, \"000\") & \")\",\n    \"檢視藥品報廢申請單 (單號: \" & Text(Today(), \"yyyymmdd\") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), \"yyyy-mm-dd\"))) + 1, \"000\") & \")\"\n    \n)"
+            Width: =460
+            X: =346
+            Y: =74
+      - Label_DrugCode:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="1. 藥品代碼 (藥號) *"
+            Width: =460
+            X: =346
+            Y: =152
+      - Input_DrugCode:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            Color: =RGBA(2, 75, 125, 1)
+            Default: =locDrugCode
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =38
+            HintText: |-
+              ="輸入藥號 (如: 10A000、39A019)"
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            OnChange: |+
+              =If(
+                  !IsBlank(Self.Text),
+                  UpdateContext({ 
+                      locDrugRecord: LookUp(DrugTable, Lower(藥號) = Lower(Trim(Self.Text))) 
+                  });
+                  If(
+                      !IsBlank(locDrugRecord.藥品學名),
+                      UpdateContext({ locDrugCode: locDrugRecord.藥號 });
+                      Reset(Combo_DrugName),
+                      Notify("查無此藥品代碼！", NotificationType.Warning)
+                  ),
+                  UpdateContext({ locDrugRecord: Blank(), locDrugCode: "" });
+                  Reset(Combo_DrugName)
+              )
+
+
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =346
+            Y: =183
+      - Label_DrugName:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="2. 藥品名稱 (打字秒搜全院主檔) *"
+            Width: =460
+            X: =836
+            Y: =152
+      - Combo_DrugName:
+          Control: Classic/ComboBox
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            ChevronBackground: =RGBA(255, 255, 255, 1)
+            ChevronDisabledBackground: =RGBA(215, 210, 204, 1)
+            ChevronDisabledFill: =RGBA(235, 233, 229, 1)
+            ChevronFill: =RGBA(71, 85, 105, 1)
+            ChevronHoverBackground: =ColorFade(Self.ChevronBackground, 20%)
+            ChevronHoverFill: =Self.ChevronFill
+            Color: =RGBA(31, 41, 55, 1)
+            DefaultSelectedItems: |
+              =If(!IsBlank(locDrugRecord), [locDrugRecord], [])
+            DisabledBorderColor: =RGBA(186, 186, 186, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            DisabledFill: =RGBA(242, 242, 242, 1)
+            DisplayFields: =["藥品學名"]
+            Font: =Font.'Open Sans'
+            Height: =38
+            HoverColor: =Self.Color
+            HoverFill: =RGBA(186, 186, 186, 1)
+            Items: |
+              =Sort(
+                  Filter(
+                      DrugTable,
+                      IsBlank(Self.SearchText) Or 
+                      StartsWith(藥品學名, Self.SearchText)
+                  ),
+                  藥品學名,
+                  SortOrder.Ascending
+              )
+            OnChange: |
+              =UpdateContext({ 
+                  locDrugRecord: Self.Selected, 
+                  locDrugCode: Self.Selected.藥號 
+              });
+              Reset(Input_DrugCode)
+            PressedColor: =Self.Color
+            PressedFill: =ColorFade(Self.SelectionFill, -30%)
+            SearchFields: =["藥品學名"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 176, 240, 1)
+            Size: =11
+            Width: =460
+            X: =836
+            Y: =183
+      - Label_ScrapDate:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="3. 報廢日期 *"
+            Width: =460
+            X: =346
+            Y: =226
+      - Input_ScrapDate:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(225, 223, 221, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            Default: |
+              =Text(Today(), "yyyy-mm-dd")
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            DisplayMode: |+
+              =DisplayMode.View
+
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =38
+            HintText: =
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =346
+            Y: =250
+      - Label_Applicant:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="4. 申請人 *"
+            Width: =460
+            X: =836
+            Y: =226
+      - Input_Applicant:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(225, 223, 221, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            Default: |
+              =If(varIsNewMode, Coalesce(User().FullName, "江睿益 (B305W2)"), varSelectedRecord.applicant)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            DisplayMode: |
+              =DisplayMode.Edit
+            Fill: |
+              =RGBA(255, 255, 255, 1)
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =38
+            HintText: |
+              ="請輸入藥師姓名和人事號"
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =836
+            Y: =250
+      - Label_Reviewer:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="5. 複核人"
+            Width: =460
+            X: =346
+            Y: =300
+      - Input_Reviewer:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            Default: |
+              =If(varIsNewMode, "", varSelectedRecord.reviewer)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Lighter
+            Height: =38
+            HintText: ="填寫科內複核藥師姓名"
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =346
+            Y: =324
+      - Label_WarehouseReviewer:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="6. 藥庫複核人員"
+            Width: =460
+            X: =836
+            Y: =300
+      - Input_WarehouseReviewer:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =38
+            HintText: ="藥庫主管或管理人員"
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =836
+            Y: =324
+      - Label_LotNumber:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="7. 批號 (Lot Number) *"
+            Width: =460
+            X: =346
+            Y: =374
+      - Input_LotNumber:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            Default: |
+              =If(varIsNewMode, "", varSelectedRecord.lot)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =38
+            HintText: |-
+              ="例如: EXP202611A"
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =346
+            Y: =398
+      - Label_Quantity:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="8. 報廢數量 *"
+            Width: =460
+            X: =836
+            Y: =374
+      - Input_Quantity:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            Default: |
+              =""
+              If(varIsNewMode, "", Text(varSelectedRecord.qty))
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =38
+            HintText: ="請輸入正整數"
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Width: =460
+            X: =836
+            Y: =398
+      - Label_Reason:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="9. 報廢原因 *"
+            Width: =950
+            X: =346
+            Y: =448
+      - Combo_Reason:
+          Control: Classic/ComboBox
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            ChevronBackground: =RGBA(255, 255, 255, 1)
+            ChevronDisabledBackground: =RGBA(215, 210, 204, 1)
+            ChevronDisabledFill: =RGBA(235, 233, 229, 1)
+            ChevronFill: =RGBA(71, 85, 105, 1)
+            ChevronHoverBackground: =ColorFade(Self.ChevronBackground, 20%)
+            ChevronHoverFill: =Self.ChevronFill
+            Color: =RGBA(31, 41, 55, 1)
+            Default: |
+              =
+            DefaultSelectedItems: |
+              =If(
+                  varIsNewMode || IsBlank(varSelectedRecord.reason),
+                  [],
+                  [{ Value: varSelectedRecord.reason }]
+              )
+            DisabledBorderColor: =RGBA(186, 186, 186, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            DisabledFill: =RGBA(242, 242, 242, 1)
+            DisplayFields: =["Value"]
+            Font: =Font.'Open Sans'
+            Height: =38
+            HoverColor: =Self.Color
+            HoverFill: =RGBA(186, 186, 186, 1)
+            IsSearchable: =false
+            Items: |
+              =["藥品過期 (Expired)", "包裝破損 / 變質", "病患退藥無法再利用", "調配失誤報廢", "冷藏失效 / 溫控異常", "其他原因（請於備註說明）"]
+            PressedColor: =Self.Color
+            PressedFill: =ColorFade(Self.SelectionFill, -30%)
+            SearchFields: =["Value"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 176, 240, 1)
+            Size: =11
+            Width: =950
+            X: =346
+            Y: =472
+      - Label_Remarks:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="10. 備註說明"
+            Width: =950
+            X: =346
+            Y: =522
+      - Input_Remarks:
+          Control: Classic/TextInput
+          Properties:
+            BorderColor: =RGBA(138, 136, 134, 1)
+            BorderThickness: =1
+            Color: =RGBA(50, 49, 48, 1)
+            Default: |+
+              =If(varIsNewMode, "", varSelectedRecord.remarks)
+
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
+            DisabledColor: =ColorFade(Self.Color, 40%)
+            DisabledFill: =Self.Fill
+            FocusedBorderThickness: =3
+            Font: =Font.'Segoe UI'
+            Height: =48
+            HintText: ="請詳細敘述報廢背景、特殊狀況或呈核說明..."
+            HoverBorderColor: =Self.Color
+            HoverColor: =Self.Color
+            HoverFill: =Self.Fill
+            Mode: =TextMode.MultiLine
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Width: =950
+            X: =346
+            Y: =546
+      - Label_Attachments:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =20
+            Text: ="11. 照片或簽核附件 (點擊上傳或拖曳憑據照片)"
+            Width: =950
+            X: =346
+            Y: =604
+      - AttachmentBox:
+          Control: Rectangle
+          Properties:
+            BorderColor: =RGBA(3, 110, 183, 1)
+            BorderStyle: =BorderStyle.Dashed
+            BorderThickness: =2
+            Fill: =RGBA(253, 253, 253, 1)
+            Height: =79
+            Width: =950
+            X: =346
+            Y: =628
+      - AttachmentHint:
+          Control: Label
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(3, 110, 183, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Text: |-
+              ="📁 點擊此處選擇檔案，或將損毀藥品照片 / 簽核憑據拖曳至此 (支援 JPG, PNG, PDF, Excel)"
+            Width: =930
+            X: =356
+            Y: =656
+      - FooterRect:
+          Control: Rectangle
+          Properties:
+            BorderColor: =RGBA(226, 232, 240, 1)
+            BorderThickness: =1
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =32
+            Width: =Parent.Width
+            Y: =Parent.Height - 32
+      - FooterTextLabel:
+          Control: Label
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Color: =RGBA(100, 116, 139, 1)
+            DisabledColor: =RGBA(186, 186, 186, 1)
+            Font: =Font.'Segoe UI'
+            Height: =22
+            Size: =11
+            Text: ="連線主機：CHI MEI Medical Center (SharePoint 雲端清單) | 離線快取資料庫：藥品主檔.json (3,427 筆) | Code-First 完美雙欄版"
+            Width: =900
+            X: =20
+            Y: =Parent.Height - 26
+      - Gallery_History:
+          Control: Gallery
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Properties:
+            BorderColor: =RGBA(245, 245, 245, 1)
+            Height: |
+              =Parent.Height - 160
+            Items: |
+              =Sort(colHistoryRecords, id, SortOrder.Descending)
+            OnSelect: |
+              =Set(varIsNewMode, false);
+              Set(varSelectedRecord, ThisItem);
+              UpdateContext({
+                  locDrugCode: ThisItem.code,
+                  locDrugRecord: LookUp(DrugTable, 藥號 = ThisItem.code)
+              })
+            TemplateSize: |
+              =85
+            Width: =276
+            X: =12
+            Y: =120
+          Children:
+            - Title1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =12
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =14
+                  Text: |+
+                    =Text(ThisItem.id)
+
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: |+
+                    =250
+
+                  X: =13
+            - Subtitle1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Color: =RGBA(96, 94, 92, 1)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =12
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =12
+                  Text: |
+                    =ThisItem.code & " · " & ThisItem.name
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: |
+                    =250
+                  X: =13
+                  Y: =34
+            - Separator1:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =8
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - Rectangle1:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Fill: =RGBA(0, 120, 212, 1)
+                  Height: =Parent.TemplateHeight - Separator1.Height
+                  OnSelect: =Select(Parent)
+                  Visible: =ThisItem.IsSelected
+                  Width: =4
+            - Label1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(113, 111, 110, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Lighter
+                  OnSelect: =Select(Parent)
+                  Size: =11
+                  Text: |
+                    ="批號: " & ThisItem.lot & " | 數量: " & ThisItem.qty
+                  Width: =250
+                  X: =13
+                  Y: =52

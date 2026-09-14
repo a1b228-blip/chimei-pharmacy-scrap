@@ -1,0 +1,7 @@
+# 系統與暫存檔
+.DS_Store
+*.tmp
+~
+.env
+*.key
+credentials.*

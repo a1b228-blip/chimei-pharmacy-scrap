@@ -13,21 +13,31 @@
    - 實現三層式卡片呈現：第一層純單號（數值）、第二層藥號與藥名、第三層批號與數量。
 6. **歷史紀錄 100% 完整原封還原**：點擊清單任一筆紀錄時，右側表單之藥號、藥名、日期、申請人、複核人、藥庫人員、批號、數量、報廢原因（`DefaultSelectedItems`）與備註全數原汁原味重現。
 7. **申請人欄位解鎖**：將 `Input_Applicant` 的 `DisplayMode` 改為 `DisplayMode.Edit`，背景改為純白，開放藥師手動輸入或自訂。
+8. **（2026-09-15）真正寫入 SharePoint**：發現先前「儲存並發送審核」只 `Collect` 進本機集合、從未真正寫進 SharePoint 清單「報廔網頁」。已在 `BtnSubmit.OnSelect` 加上 `Patch('報廔網頁', Defaults(...), {...})`，目前會寫入：藥號、藥品名稱、報廔日期、批號、報廔數量、備註、報廔原因、審核狀態（固定 `"待審核"`）。
+9. **（2026-09-15）第 11 項照片/簽核附件上傳**：移除原本假的 `AttachmentBox`（矩形＋提示文字，無實際功能），改用原生 Attachments 控制項 `AttachmentsControl1`，支援電腦選檔／拖曳與手機拍照上傳，任何檔案類型皆可；送出時若有附件會另外 `Patch` 寫入 SharePoint 的「附件」欄位。
+10. **（2026-09-15）SharePoint 欄位型別調整**：「報廔原因」「審核狀態」兩欄已在 SharePoint 由「選擇」改成「單行文字」，才能被 Patch 自動寫入；過程中發現連線快取問題，靠「移除資料來源→重新連線」才讓 Studio 抓到新型別。
+11. **（2026-09-15）藥庫複核人員欄位補齊**：第 6 項原本完全沒有輸入控制項（`Input_WarehouseReviewer` 這個名字被公式引用但實際不存在，導致存檔按鈕會報錯）。已新增下拉選單 `Combo_WarehouseReviewer`，目前固定兩位人選：`980526 黃慧娟`、`A807W6 王詩涵`（清單直接寫死在 `Items` 屬性的 `Table(...)` 裡，不透過集合，避免下一項的 bug）；下拉同時支援輸入姓名或工號搜尋。
+12. **申請人／複核人／藥庫複核人員三欄位維持「個人或群組」型別、暫不寫入 SharePoint**（使用者明確決定）：畫面上是自由輸入文字或选人下拉，跟 SharePoint 的個人型別無法直接對應，目前先只寫本機歷史清單，SharePoint 端這三欄留空，之後如需要再另外設計對應方式。
 
 ## 🚦 目前狀態
-線上 Power Apps 應用程式（App ID: `d8ae7885-7892-4805-816a-a9593e587077`）所有核心連動、即時秒搜、存檔與歷史清單點閱機能均已實測運作正常。最新雲端原始碼已完整同步快取至 `cloud_app_sources/`。
+線上 Power Apps 應用程式（App ID: `d8ae7885-7892-4805-816a-a9593e587077`，App 名稱「報廔流程表1」）已存檔（尚未正式發布 Publish）。App Checker 顯示 9 個既有錯誤，皆與今天改動無關（附件型別檢查警告、`FormHeaderTitle`/`Input_Quantity` 既有小問題），已逐一確認過非新增。
 
 ## ➡️ 下一步
-1. 於線上 Power Apps Studio 進行最後儲存並正式發布（Publish）。
-2. 與 Power Automate 後端審核推播流程連動測試（Teams 自適應卡片主管核准）。
-3. 視科內需求補齊檔案照片上傳（`AttachmentBox`）實際儲存 SharePoint 附件之邏輯。
+1. **請人工實測**：在 Preview 或正式發布後的 App 中，實際跑一次「儲存並發送審核」（含上傳附件），確認 SharePoint 清單「報廔網頁」真的新增一筆資料、附件也真的上傳成功——這件事這次 session 沒辦法用自動化點擊完全確認。
+2. 視需要修掉那 9 個既有錯誤（大部分是次要警告，不影響本次改動）。
+3. 於線上 Power Apps Studio 進行正式發布（Publish）——**尚未執行，需使用者確認後再做**。
+4. 與 Power Automate 後端審核推播流程連動測試（Teams 自適應卡片主管核准）。
+5. 待使用者確認「複核人」「申請人」是否也要仿照藥庫複核人員做法（固定人員下拉或其他方式）寫回 SharePoint。
 
 ## ⚠️ 注意事項
 - 微軟 `canvasauthoring` MCP 僅支援雲端同步下載（`sync_canvas`）與本地驗證，無法反向直接覆寫線上編輯畫面。
 - 下拉選單（ComboBox）若需動態選取，必須設定在 `DefaultSelectedItems`，不可使用 `Default`。
 - Collection 集合（如 `colHistoryRecords`）嚴格鎖定欄位型態，`id` 務必維持一致的數值型態（`Value(...)`）。
+- **新發現的怪癖**：`App.OnStart` 裡用 `ClearCollect` 建立的集合，實測會出現「App Checker 沒報錯、手動按鈕觸發同一段公式正常，但 App 實際啟動時集合卻是空的」的情況（本次在藥庫複核人員清單上踩到）。目前沒查出根本原因，遇到小型固定清單時**建議直接寫死在控制項的 `Items` 屬性（`Table(...)`）**，不要依賴 `OnStart` 建集合這條路。
+- 下拉選單控制項若是用「複製貼上」既有控制項做出來的，要注意屬性面板「相依於...」那個隱藏的父控制項連動設定可能會被一併複製過來，造成莫名其妙的 `SearchItems` 公式錯誤；保險做法是用「插入」全新建立控制項，不要複製別的下拉選單。
+- SharePoint 欄位型別改了之後（例如選擇→文字），Power Apps Studio 端要記得把該資料來源「移除→重新連線」，否則公式檢查器會一直用舊型別報錯。
 
 ## 🕐 最後更新
-- 時間：2026-09-14 16:50
-- 更新者：Google Antigravity @ jiangruiyideMacBook-Air.local
-- Git push：✅ 已推 (60311ac)
+- 時間：2026-09-15 21:23
+- 更新者：Claude Code (Sonnet 5) @ 江瑞益的MacBook Air
+- Git push：本次工作全在雲端 Power Apps Studio 完成，未變更本機追蹤檔案（僅更新本 handoff.md）；本機另有幾個 2026-09-14 之前留下的未追蹤檔案（.msapp／.aspx 匯出檔），非本次 session 產生，未一併處理。

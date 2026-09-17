@@ -4,6 +4,34 @@ App:
       =Set(varIsNewMode, true);
       Set(varCurrentRecordId, 1001);
       ClearCollect(
+          colPharmacists,
+          { EmpId: "820421", Name: "崔曉芬", DisplayText: "崔曉芬 (820421)" },
+          { EmpId: "860424", Name: "李淑鈴", DisplayText: "李淑鈴 (860424)" },
+          { EmpId: "860549", Name: "洪銘豐", DisplayText: "洪銘豐 (860549)" },
+          { EmpId: "9306DQ", Name: "趙婌伶", DisplayText: "趙婌伶 (9306DQ)" },
+          { EmpId: "9308Q5", Name: "黃曉鳳", DisplayText: "黃曉鳳 (9308Q5)" },
+          { EmpId: "9407A2", Name: "李佩汶", DisplayText: "李佩汶 (9407A2)" },
+          { EmpId: "961034", Name: "祁國棟", DisplayText: "祁國棟 (961034)" },
+          { EmpId: "9708R2", Name: "廖玲嬋", DisplayText: "廖玲嬋 (9708R2)" },
+          { EmpId: "980526", Name: "黃慧娟", DisplayText: "黃慧娟 (980526)" },
+          { EmpId: "981201", Name: "謝雅芬", DisplayText: "謝雅芬 (981201)" },
+          { EmpId: "A20426", Name: "林于瑈", DisplayText: "林于瑈 (A20426)" },
+          { EmpId: "A309W5", Name: "吳芸妮", DisplayText: "吳芸妮 (A309W5)" },
+          { EmpId: "A403W8", Name: "黃羿惠", DisplayText: "黃羿惠 (A403W8)" },
+          { EmpId: "A404Y3", Name: "曾馨霈", DisplayText: "曾馨霈 (A404Y3)" },
+          { EmpId: "A504W5", Name: "莊博茹", DisplayText: "莊博茹 (A504W5)" },
+          { EmpId: "A51156", Name: "王薏華", DisplayText: "王薏華 (A51156)" },
+          { EmpId: "A705W8", Name: "王景毅", DisplayText: "王景毅 (A705W8)" },
+          { EmpId: "A806W5", Name: "謝斐庭", DisplayText: "謝斐庭 (A806W5)" },
+          { EmpId: "A908Y1", Name: "李佳霙", DisplayText: "李佳霙 (A908Y1)" },
+          { EmpId: "B208W2", Name: "郭曼如", DisplayText: "郭曼如 (B208W2)" },
+          { EmpId: "B30419", Name: "王沛祥", DisplayText: "王沛祥 (B30419)" },
+          { EmpId: "B409W7", Name: "黃碧珠", DisplayText: "黃碧珠 (B409W7)" },
+          { EmpId: "B504W2", Name: "姚如舫", DisplayText: "姚如舫 (B504W2)" },
+          { EmpId: "B505W2", Name: "方嘉苡", DisplayText: "方嘉苡 (B505W2)" },
+          { EmpId: "B508W6", Name: "王郁萱", DisplayText: "王郁萱 (B508W6)" }
+      );
+      ClearCollect(
           colHistoryRecords,
           Table(
               { id: 1001, code: "10A000", name: "10A000 · ADI-PEG20 (40.25mg/V)針.恩慈", date: "2026-09-08", applicant: "江睿益 (B305W2)", reviewer: "陳藥師", warehouseReviewer: "林庫管", lot: "LOT-202608A", qty: 2, reason: "藥品過期", remarks: "病房常備藥品逾期退回", status: "主管已核准" },

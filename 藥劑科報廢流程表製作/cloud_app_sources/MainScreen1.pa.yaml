@@ -458,34 +458,12 @@ Screens:
             HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
             HoverColor: =Self.Color
             HoverFill: =RGBA(11, 90, 47, 1)
-            OnSelect: |+
+            OnSelect: |-
               =If(
                   IsBlank(Input_DrugCode.Text) || IsBlank(Input_Quantity.Text) || IsBlank(Input_LotNumber.Text),
                   Notify("請完整填寫必填欄位 (藥號、批號、數量)！", NotificationType.Error),
-                  UpdateContext({
-                      varCurrentSerial: Text(Today(), "yyyymmdd") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), "yyyy-mm-dd"))) + 1, "000")
-                  });
-                  Collect(
-                      colHistoryRecords,
-                      {
-                          id: Value(varCurrentSerial),
-                          serialNo: varCurrentSerial,
-                          code: Input_DrugCode.Text,
-                          name: Coalesce(Combo_DrugName.Selected.藥品學名, locDrugRecord.藥品學名, Input_DrugCode.Text),
-                          date: Input_ScrapDate.Text,
-                          applicant: Input_Applicant.Text,
-                          reviewer: Input_Reviewer.Text,
-                          warehouseReviewer: Input_WarehouseReviewer.Text,
-                          lot: Input_LotNumber.Text,
-                          qty: Value(Input_Quantity.Text),
-                          reason: Coalesce(Combo_Reason.Selected.Value, "其他原因"),
-                          remarks: Input_Remarks.Text,
-                          status: "待主管審核"
-                      }
-                  );
-                  Notify("報廢申請單已成功儲存！單號：" & varCurrentSerial, NotificationType.Success)
-              )
-
+              UpdateContext({varCurrentSerial: Text(Today(), "yyyymmdd") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), "yyyy-mm-dd"))) + 1, "000")});Collect(colHistoryRecords, {id: Value(varCurrentSerial), serialNo: varCurrentSerial, code: Input_DrugCode.Text, name: Coalesce(Combo_DrugName.Selected.藥品學名, locDrugRecord.藥品學名, Input_DrugCode.Text), date: Input_ScrapDate.Text, applicant: Coalesce(ComboBox1.Selected.DisplayText, "未填寫"), reviewer: Coalesce(ComboBox2.Selected.DisplayText, "未填寫"), warehouseReviewer: Coalesce(Combo_WarehouseReviewer.Selected.DisplayText, "未填寫"), lot: Input_LotNumber.Text, qty: Value(Input_Quantity.Text), reason: Coalesce(Combo_Reason.Selected.Value, "其他原因"), remarks: Input_Remarks.Text, status: "待主管審核"});Patch('報廢網頁', Defaults('報廢網頁'), {標題: Input_DrugCode.Text, 藥品名稱: Coalesce(locDrugRecord.藥品學名, Input_DrugCode.Text), 報廢日期: DateValue(Input_ScrapDate.Text), 批號: Input_LotNumber.Text, 報廢數量: Value(Input_Quantity.Text), 備註: Input_Remarks.Text, 報廢原因: Coalesce(Combo_Reason.Selected.Value, "其他原因（請於備註說明）"), 審核狀態: "待審核"}, Form_Attachment.Updates); ResetForm(Form_Attachment); 
+              Notify("報廢申請單與附加檔案已成功儲存至 SharePoint！單號：" & varCurrentSerial, NotificationType.Success))
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
             PressedFill: =Self.Color
@@ -528,10 +506,10 @@ Screens:
             BorderColor: =RGBA(226, 232, 240, 1)
             BorderThickness: =1
             Fill: =RGBA(255, 255, 255, 1)
-            Height: =608
+            Height: =620
             Width: =1031
             X: =305
-            Y: =110
+            Y: =100
       - FormHeaderTitle:
           Control: Label
           Properties:
@@ -559,7 +537,7 @@ Screens:
             Text: ="1. 藥品代碼 (藥號) *"
             Width: =460
             X: =346
-            Y: =152
+            Y: =116
       - Input_DrugCode:
           Control: Classic/TextInput
           Properties:
@@ -572,7 +550,7 @@ Screens:
             DisabledFill: =Self.Fill
             FocusedBorderThickness: =3
             Font: =Font.'Segoe UI'
-            Height: =38
+            Height: =36
             HintText: |-
               ="輸入藥號 (如: 10A000、39A019)"
             HoverBorderColor: =Self.Color
@@ -602,7 +580,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =346
-            Y: =183
+            Y: =138
       - Label_DrugName:
           Control: Label
           Properties:
@@ -615,7 +593,7 @@ Screens:
             Text: ="2. 藥品名稱 (打字秒搜全院主檔) *"
             Width: =460
             X: =836
-            Y: =152
+            Y: =116
       - Combo_DrugName:
           Control: Classic/ComboBox
           Properties:
@@ -635,7 +613,7 @@ Screens:
             DisabledFill: =RGBA(242, 242, 242, 1)
             DisplayFields: =["藥品學名"]
             Font: =Font.'Open Sans'
-            Height: =38
+            Height: =36
             HoverColor: =Self.Color
             HoverFill: =RGBA(186, 186, 186, 1)
             Items: |
@@ -663,7 +641,7 @@ Screens:
             Size: =11
             Width: =460
             X: =836
-            Y: =183
+            Y: =138
       - Label_ScrapDate:
           Control: Label
           Properties:
@@ -676,7 +654,7 @@ Screens:
             Text: ="3. 報廢日期 *"
             Width: =460
             X: =346
-            Y: =226
+            Y: =182
       - Input_ScrapDate:
           Control: Classic/TextInput
           Properties:
@@ -693,7 +671,7 @@ Screens:
 
             FocusedBorderThickness: =3
             Font: =Font.'Segoe UI'
-            Height: =38
+            Height: =36
             HintText: =
             HoverBorderColor: =Self.Color
             HoverColor: =Self.Color
@@ -705,7 +683,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =346
-            Y: =250
+            Y: =204
       - Label_Applicant:
           Control: Label
           Properties:
@@ -718,38 +696,7 @@ Screens:
             Text: ="4. 申請人 *"
             Width: =460
             X: =836
-            Y: =226
-      - Input_Applicant:
-          Control: Classic/TextInput
-          Properties:
-            BorderColor: =RGBA(225, 223, 221, 1)
-            BorderThickness: =1
-            Color: =RGBA(50, 49, 48, 1)
-            Default: |
-              =If(varIsNewMode, Coalesce(User().FullName, "江睿益 (B305W2)"), varSelectedRecord.applicant)
-            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
-            DisabledColor: =ColorFade(Self.Color, 40%)
-            DisabledFill: =Self.Fill
-            DisplayMode: |
-              =DisplayMode.Edit
-            Fill: |
-              =RGBA(255, 255, 255, 1)
-            FocusedBorderThickness: =3
-            Font: =Font.'Segoe UI'
-            Height: =38
-            HintText: |
-              ="請輸入藥師姓名和人事號"
-            HoverBorderColor: =Self.Color
-            HoverColor: =Self.Color
-            HoverFill: =Self.Fill
-            RadiusBottomLeft: =4
-            RadiusBottomRight: =4
-            RadiusTopLeft: =4
-            RadiusTopRight: =4
-            Size: =13.5
-            Width: =460
-            X: =836
-            Y: =250
+            Y: =182
       - Label_Reviewer:
           Control: Label
           Properties:
@@ -762,34 +709,7 @@ Screens:
             Text: ="5. 複核人"
             Width: =460
             X: =346
-            Y: =300
-      - Input_Reviewer:
-          Control: Classic/TextInput
-          Properties:
-            BorderColor: =RGBA(138, 136, 134, 1)
-            BorderThickness: =1
-            Color: =RGBA(50, 49, 48, 1)
-            Default: |
-              =If(varIsNewMode, "", varSelectedRecord.reviewer)
-            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
-            DisabledColor: =ColorFade(Self.Color, 40%)
-            DisabledFill: =Self.Fill
-            FocusedBorderThickness: =3
-            Font: =Font.'Segoe UI'
-            FontWeight: =FontWeight.Lighter
-            Height: =38
-            HintText: ="填寫科內複核藥師姓名"
-            HoverBorderColor: =Self.Color
-            HoverColor: =Self.Color
-            HoverFill: =Self.Fill
-            RadiusBottomLeft: =4
-            RadiusBottomRight: =4
-            RadiusTopLeft: =4
-            RadiusTopRight: =4
-            Size: =13.5
-            Width: =460
-            X: =346
-            Y: =324
+            Y: =248
       - Label_WarehouseReviewer:
           Control: Label
           Properties:
@@ -802,31 +722,7 @@ Screens:
             Text: ="6. 藥庫複核人員"
             Width: =460
             X: =836
-            Y: =300
-      - Input_WarehouseReviewer:
-          Control: Classic/TextInput
-          Properties:
-            BorderColor: =RGBA(138, 136, 134, 1)
-            BorderThickness: =1
-            Color: =RGBA(50, 49, 48, 1)
-            DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
-            DisabledColor: =ColorFade(Self.Color, 40%)
-            DisabledFill: =Self.Fill
-            FocusedBorderThickness: =3
-            Font: =Font.'Segoe UI'
-            Height: =38
-            HintText: ="藥庫主管或管理人員"
-            HoverBorderColor: =Self.Color
-            HoverColor: =Self.Color
-            HoverFill: =Self.Fill
-            RadiusBottomLeft: =4
-            RadiusBottomRight: =4
-            RadiusTopLeft: =4
-            RadiusTopRight: =4
-            Size: =13.5
-            Width: =460
-            X: =836
-            Y: =324
+            Y: =248
       - Label_LotNumber:
           Control: Label
           Properties:
@@ -839,7 +735,7 @@ Screens:
             Text: ="7. 批號 (Lot Number) *"
             Width: =460
             X: =346
-            Y: =374
+            Y: =314
       - Input_LotNumber:
           Control: Classic/TextInput
           Properties:
@@ -853,7 +749,7 @@ Screens:
             DisabledFill: =Self.Fill
             FocusedBorderThickness: =3
             Font: =Font.'Segoe UI'
-            Height: =38
+            Height: =36
             HintText: |-
               ="例如: EXP202611A"
             HoverBorderColor: =Self.Color
@@ -866,7 +762,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =346
-            Y: =398
+            Y: =336
       - Label_Quantity:
           Control: Label
           Properties:
@@ -879,7 +775,7 @@ Screens:
             Text: ="8. 報廢數量 *"
             Width: =460
             X: =836
-            Y: =374
+            Y: =314
       - Input_Quantity:
           Control: Classic/TextInput
           Properties:
@@ -894,7 +790,7 @@ Screens:
             DisabledFill: =Self.Fill
             FocusedBorderThickness: =3
             Font: =Font.'Segoe UI'
-            Height: =38
+            Height: =36
             HintText: ="請輸入正整數"
             HoverBorderColor: =Self.Color
             HoverColor: =Self.Color
@@ -906,7 +802,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =836
-            Y: =398
+            Y: =336
       - Label_Reason:
           Control: Label
           Properties:
@@ -919,7 +815,7 @@ Screens:
             Text: ="9. 報廢原因 *"
             Width: =950
             X: =346
-            Y: =448
+            Y: =380
       - Combo_Reason:
           Control: Classic/ComboBox
           Properties:
@@ -944,7 +840,7 @@ Screens:
             DisabledFill: =RGBA(242, 242, 242, 1)
             DisplayFields: =["Value"]
             Font: =Font.'Open Sans'
-            Height: =38
+            Height: =36
             HoverColor: =Self.Color
             HoverFill: =RGBA(186, 186, 186, 1)
             IsSearchable: =false
@@ -959,7 +855,7 @@ Screens:
             Size: =11
             Width: =950
             X: =346
-            Y: =472
+            Y: =402
       - Label_Remarks:
           Control: Label
           Properties:
@@ -972,7 +868,7 @@ Screens:
             Text: ="10. 備註說明"
             Width: =950
             X: =346
-            Y: =522
+            Y: =446
       - Input_Remarks:
           Control: Classic/TextInput
           Properties:
@@ -987,7 +883,7 @@ Screens:
             DisabledFill: =Self.Fill
             FocusedBorderThickness: =3
             Font: =Font.'Segoe UI'
-            Height: =48
+            Height: =42
             HintText: ="請詳細敘述報廢背景、特殊狀況或呈核說明..."
             HoverBorderColor: =Self.Color
             HoverColor: =Self.Color
@@ -999,7 +895,7 @@ Screens:
             RadiusTopRight: =4
             Width: =950
             X: =346
-            Y: =546
+            Y: =468
       - Label_Attachments:
           Control: Label
           Properties:
@@ -1012,33 +908,7 @@ Screens:
             Text: ="11. 照片或簽核附件 (點擊上傳或拖曳憑據照片)"
             Width: =950
             X: =346
-            Y: =604
-      - AttachmentBox:
-          Control: Rectangle
-          Properties:
-            BorderColor: =RGBA(3, 110, 183, 1)
-            BorderStyle: =BorderStyle.Dashed
-            BorderThickness: =2
-            Fill: =RGBA(253, 253, 253, 1)
-            Height: =79
-            Width: =950
-            X: =346
-            Y: =628
-      - AttachmentHint:
-          Control: Label
-          Properties:
-            Align: =Align.Center
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(3, 110, 183, 1)
-            DisabledColor: =RGBA(186, 186, 186, 1)
-            Font: =Font.'Segoe UI'
-            FontWeight: =FontWeight.Semibold
-            Height: =24
-            Text: |-
-              ="📁 點擊此處選擇檔案，或將損毀藥品照片 / 簽核憑據拖曳至此 (支援 JPG, PNG, PDF, Excel)"
-            Width: =930
-            X: =356
-            Y: =656
+            Y: =518
       - FooterRect:
           Control: Rectangle
           Properties:
@@ -1164,4 +1034,252 @@ Screens:
                     ="批號: " & ThisItem.lot & " | 數量: " & ThisItem.qty
                   Width: =250
                   X: =13
-                  Y: =52
+                  Y: =45
+      - ComboBox1:
+          Control: Classic/ComboBox
+          Properties:
+            BorderColor: =RGBA(245, 245, 245, 1)
+            ChevronBackground: =RGBA(245, 245, 245, 1)
+            ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+            ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+            ChevronFill: =RGBA(50, 49, 48, 1)
+            ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+            ChevronHoverFill: =RGBA(50, 49, 48, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DefaultSelectedItems: |
+              =If(
+                  varIsNewMode,
+                  Filter(colPharmacists, Name in User().FullName || EmpId in User().Email),
+                  Filter(colPharmacists, DisplayText = varSelectedRecord.applicant || Name = varSelectedRecord.applicant)
+              )
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            DisabledFill: =RGBA(242, 242, 241, 0)
+            DisplayFields: |
+              =["DisplayText"]
+            Fill: =RGBA(245, 245, 245, 1)
+            Font: =Font.'Segoe UI'
+            Height: =36
+            HoverBorderColor: =RGBA(16, 110, 190, 1)
+            HoverColor: =RGBA(50, 49, 48, 1)
+            HoverFill: =RGBA(245, 245, 245, 1)
+            InputTextPlaceholder: |
+              ="請選擇或輸入藥師姓名 / 員工編號搜尋"
+            Items: |
+              =colPharmacists
+            PressedBorderColor: =RGBA(16, 110, 190, 1)
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 120, 212, 1)
+            SearchFields: =["Name","EmpId","DisplayText"]
+            SelectMultiple: |
+              =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 120, 212, 1)
+            Width: =460
+            X: =836
+            Y: =204
+      - ComboBox2:
+          Control: Classic/ComboBox
+          Properties:
+            BorderColor: =RGBA(245, 245, 245, 1)
+            ChevronBackground: =RGBA(245, 245, 245, 1)
+            ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+            ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+            ChevronFill: =RGBA(50, 49, 48, 1)
+            ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+            ChevronHoverFill: =RGBA(50, 49, 48, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DefaultSelectedItems: |-
+              =If(
+                  varIsNewMode,
+                  Blank(),
+                  Filter(colPharmacists, DisplayText = varSelectedRecord.reviewer || Name = varSelectedRecord.reviewer)
+              )
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            DisabledFill: =RGBA(242, 242, 241, 0)
+            DisplayFields: |
+              =["DisplayText"]
+            Fill: =RGBA(245, 245, 245, 1)
+            Font: =Font.'Segoe UI'
+            Height: =36
+            HoverBorderColor: =RGBA(16, 110, 190, 1)
+            HoverColor: =RGBA(50, 49, 48, 1)
+            HoverFill: =RGBA(245, 245, 245, 1)
+            InputTextPlaceholder: ="請選擇或輸入複核藥師姓名 / 員工編號搜尋"
+            Items: |
+              =colPharmacists
+            PressedBorderColor: =RGBA(16, 110, 190, 1)
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 120, 212, 1)
+            SearchFields: |
+              =["Name", "EmpId", "DisplayText"]
+            SelectMultiple: |
+              =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 120, 212, 1)
+            Width: =460
+            X: =346
+            Y: =270
+      - Combo_WarehouseReviewer:
+          Control: Classic/ComboBox
+          Properties:
+            BorderColor: =RGBA(245, 245, 245, 1)
+            ChevronBackground: =RGBA(245, 245, 245, 1)
+            ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+            ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+            ChevronFill: =RGBA(50, 49, 48, 1)
+            ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+            ChevronHoverFill: =RGBA(50, 49, 48, 1)
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            DisabledFill: =RGBA(242, 242, 241, 0)
+            DisplayFields: =["DisplayText"]
+            Fill: =RGBA(245, 245, 245, 1)
+            Font: =Font.'Segoe UI'
+            Height: =36
+            HoverBorderColor: =RGBA(16, 110, 190, 1)
+            HoverColor: =RGBA(50, 49, 48, 1)
+            HoverFill: =RGBA(245, 245, 245, 1)
+            InputTextPlaceholder: ="請選擇或輸入藥庫複核人員姓名 / 員工編號搜尋"
+            Items: =Table({EmpId:"980526",Name:"黃慧娟",DisplayText:"黃慧娟 (980526)"},{EmpId:"A807W6",Name:"王詩涵",DisplayText:"王詩涵 (A807W6)"})
+            PressedBorderColor: =RGBA(16, 110, 190, 1)
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 120, 212, 1)
+            SearchFields: =["DisplayText"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 120, 212, 1)
+            Width: =460
+            X: =836
+            Y: =270
+      - Form_Attachment:
+          Control: Form
+          Variant: Classic
+          Layout: Vertical
+          Properties:
+            BorderColor: =RGBA(218, 220, 224, 1)
+            BorderThickness: =1
+            DataSource: ='報廢網頁'
+            DefaultMode: =FormMode.New
+            Height: =110
+            Item: =Defaults('報廢網頁')
+            Width: =950
+            X: =346
+            Y: =540
+          Children:
+            - 附件_DataCard1:
+                Control: TypedDataCard
+                Variant: ClassicAttachmentsEdit
+                IsLocked: true
+                Properties:
+                  BorderColor: =RGBA(245, 245, 245, 1)
+                  DataField: ="{Attachments}"
+                  Default: =ThisItem.附件
+                  DisplayName: =DataSourceInfo([@報廢網頁],DataSourceInfo.DisplayName,'{Attachments}')
+                  Required: =false
+                  Update: =DataCardValue12.Attachments
+                  Width: =316
+                  X: =0
+                  Y: =0
+                Children:
+                  - DataCardKey12:
+                      Control: Label
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        FocusedBorderThickness: =4
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =34
+                        PaddingLeft: =0
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue12:
+                      Control: Attachments
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        BorderStyle: =BorderStyle.None
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        DisabledFill: =RGBA(242, 242, 241, 0)
+                        DisplayMode: =Parent.DisplayMode
+                        Fill: =RGBA(245, 245, 245, 1)
+                        Font: =Font.'Segoe UI'
+                        HoverColor: =RGBA(50, 49, 48, 1)
+                        HoverFill: =RGBA(245, 245, 245, 1)
+                        ItemColor: =RGBA(0, 0, 0, 1)
+                        ItemFill: =RGBA(0, 120, 212, 1)
+                        ItemHoverColor: =RGBA(50, 49, 48, 1)
+                        ItemHoverFill: =RGBA(245, 245, 245, 1)
+                        ItemSpacing: =12
+                        Items: =Parent.Default
+                        NoAttachmentsColor: =RGBA(161, 159, 157, 1)
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey12.Y + DataCardKey12.Height + 5
+                  - ErrorMessage12:
+                      Control: Label
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        Color: =RGBA(168, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(168, 0, 0, 1)
+                        FocusedBorderThickness: =4
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue12.Y + DataCardValue12.Height
+                  - StarVisible12:
+                      Control: Label
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        FocusedBorderThickness: =4
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =DataCardKey12.Height
+                        PaddingLeft: =0
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey12.Y

@@ -27,8 +27,8 @@
 ## 🚦 目前狀態
 線上 Power Apps 應用程式（App ID: `d8ae7885-7892-4805-816a-a9593e587077`，名稱「報廢流程表1」）最新狀態已存檔並已發布。表單排版優雅緊湊、無越界問題，按鈕語法完全合法，具備隨單上傳附件之底層結構。
 
-## ➡️ 下一步（下次開工第一優先）
-1. **【使用者指定核心任務】SharePoint 申請人／複核人／藥庫複核人員三欄呈現**：
+## ➡️ 下一步（下次開工兩大核心任務）
+1. **【使用者指定核心任務一】SharePoint 申請人／複核人／藥庫複核人員三欄呈現**：
    - **問題現況**：目前 SharePoint 清單「報廢網頁」中看不到這三人的名字，主因是當初在 SharePoint 建為「人員或群組 (Person/Group)」型別，微軟禁止原地改為文字且無法直接存入表單選單的純文字，導致目前 Patch 略過這三欄。
    - **下次開工執行 SOP**：
      1. 前往 SharePoint「報廢網頁」清單主畫面（或清單設定），將舊的「申請人」、「複核人」、「藥庫複核人員」三欄刪除。
@@ -38,8 +38,14 @@
         - `申請人: Coalesce(ComboBox1.Selected.DisplayText, "未填寫")`
         - `複核人: Coalesce(ComboBox2.Selected.DisplayText, "未填寫")`
         - `藥庫複核人員: Coalesce(Combo_WarehouseReviewer.Selected.DisplayText, "未填寫")`
-2. **端到端實測送單**：在 Preview 模式填表並拖入 `TEST20260917.pdf`，按「儲存並發送審核」，確認 SharePoint 清單同時出現「文字資料」、「三位人員姓名」以及「`TEST20260917.pdf` 附件」。
-3. **Power Automate 流程開啟與 Teams 推播驗證**：確認後端主管審核 Adaptive Card 流程處於開啟狀態。
+2. **【使用者指定核心任務二】報廢紀錄清單（Gallery_History）新增審核狀態欄與 Teams 主管審核即時連動**：
+   - **需求定義**：
+     - 左側報廢紀錄清單的每張卡片上，必須新增一欄/標籤呈現 **「已核准 / 待審核 / 已退件」** 之審核狀態。
+     - 當主管在 Teams 頻道/私訊中點擊自適應卡片的「核准」或「退件」後，Power Apps 前端的報廢紀錄清單必須能 **即時動態連動** 反映最新審核結果！
+   - **架構升級 SOP**：
+     1. **卡片 UI 狀態徽章 (Status Badge)**：在 `Gallery_History` 樣板內加入狀態 Label，文字設定為 `ThisItem.status`（或 `ThisItem.審核狀態`），並設定動態色彩（已核准為綠色、待審核為橘色、已退件為紅色）。
+     2. **雲端即時連動**：將清單資料來源由純本地 `colHistoryRecords` 升級為直接連動 SharePoint 清單 `'報廢網頁'`（或於畫面 OnVisible / 定時 Refresh('報廢網頁') 重新同步），確保後端 Teams 審核回寫後，前端清單同步更新狀態。
+3. **端到端全流程實測驗收**：在 Preview 模式填表並拖入 `TEST20260917.pdf` 送單，並驗證 Teams 主管推播與審核回寫連動。
 
 ## ⚠️ 注意事項
 - 微軟 `canvasauthoring` MCP 僅支援雲端同步下載（`sync_canvas`）與本地驗證，無法反向直接覆寫線上編輯畫面。

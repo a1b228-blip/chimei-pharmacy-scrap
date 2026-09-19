@@ -411,16 +411,7 @@ Screens:
                 )
             )
         );
-        If(IsEmpty(colHistoryRecords),
-            ClearCollect(
-                colHistoryRecords,
-                Table(
-                    { id: 1001, code: "10A000", name: "10A000 · ADI-PEG20 (40.25mg/V)針.恩慈", date: "2026-09-08", applicant: "江睿益 (B305W2)", reviewer: "陳藥師", warehouseReviewer: "林庫管", lot: "LOT-202608A", qty: 2, reason: "藥品過期", remarks: "病房常備藥品逾期退回", status: "主管已核准" },
-                    { id: 1002, code: "39A019", name: "39A019 · Aminophylline(250mg)針", date: "2026-09-09", applicant: "江睿益 (B305W2)", reviewer: "黃藥師", warehouseReviewer: "王庫管", lot: "LOT-99881", qty: 5, reason: "包裝破損 / 變質", remarks: "外盒受潮破損，確保安全申請報廢", status: "主管已核准" },
-                    { id: 1003, code: "56M015", name: "56M015 · Magvac(250ml)鎂福內服液", date: "2026-09-10", applicant: "江睿益 (B305W2)", reviewer: "李藥師", warehouseReviewer: "張庫管", lot: "MG-2025", qty: 12, reason: "冷藏失效 / 溫控異常", remarks: "溫控紀錄警報，依SOP整批送審報廢", status: "主管已核准" }
-                )
-            )
-        )
+        Refresh('報廢網頁'); ClearCollect(colHistoryRecords, AddColumns('報廢網頁', id, IfError(Value(報廢單號), 0), serialNo, 報廢單號, code, 藥品代碼, name, 藥品名稱, date, Text(報廢日期, "yyyy-mm-dd"), applicant, 申請人, reviewer, 複核人, warehouseReviewer, 藥庫複核人員, lot, 批號, qty, 報廢數量, reason, 報廢原因, remarks, 備註, status, 審核狀態))
     Children:
       - HeaderRect:
           Control: Rectangle
@@ -504,7 +495,7 @@ Screens:
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Form_Attachment.Updates
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ),
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Notify("SharePoint 寫入失敗：" & FirstError.Message, NotificationType.Error),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ResetForm(Form_Attachment);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ResetForm(Form_Attachment); Refresh('報廢網頁'); ClearCollect(colHistoryRecords, AddColumns('報廢網頁', id, IfError(Value(報廢單號), 0), serialNo, 報廢單號, code, 藥品代碼, name, 藥品名稱, date, Text(報廢日期, "yyyy-mm-dd"), applicant, 申請人, reviewer, 複核人, warehouseReviewer, 藥庫複核人員, lot, 批號, qty, 報廢數量, reason, 報廢原因, remarks, 備註, status, 審核狀態));
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Notify("報廢申請單已成功儲存至 SharePoint！單號：" & varCurrentSerial, NotificationType.Success)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
@@ -550,10 +541,10 @@ Screens:
             BorderColor: =RGBA(226, 232, 240, 1)
             BorderThickness: =1
             Fill: =RGBA(255, 255, 255, 1)
-            Height: =620
+            Height: =612
             Width: =1031
             X: =305
-            Y: =100
+            Y: =116
       - FormHeaderTitle:
           Control: Label
           Properties:
@@ -561,14 +552,14 @@ Screens:
             Color: =RGBA(32, 31, 30, 1)
             DisabledColor: =RGBA(186, 186, 186, 1)
             Font: =Font.'Segoe UI'
-            FontWeight: |
-              =550
-            Height: =29
+            FontWeight: =FontWeight.Semibold
+            Height: =38
             Size: =18
-            Text: "=If(\n    varIsNewMode,\n    \"藥品報廢申請單 (單號: \" & Text(Today(), \"yyyymmdd\") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), \"yyyy-mm-dd\"))) + 1, \"000\") & \")\",\n    \"檢視藥品報廢申請單 (單號: \" & Text(Today(), \"yyyymmdd\") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), \"yyyy-mm-dd\"))) + 1, \"000\") & \")\"\n    \n)"
-            Width: =460
+            Text: |-
+              =If(varIsNewMode, "藥品報廢申請單 (單號: " & Text(Today(), "yyyymmdd") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), "yyyy-mm-dd"))) + 1, "000") & ")", "檢視藥品報廢申請單 (單號: " & Coalesce(varSelectedRecord.serialNo, Text(varSelectedRecord.id)) & ")")
+            Width: =500
             X: =346
-            Y: =74
+            Y: =70
       - Label_DrugCode:
           Control: Label
           Properties:
@@ -581,7 +572,7 @@ Screens:
             Text: ="1. 藥品代碼 (藥號) *"
             Width: =460
             X: =346
-            Y: =116
+            Y: =132
       - Input_DrugCode:
           Control: Classic/TextInput
           Properties:
@@ -624,7 +615,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =346
-            Y: =138
+            Y: =154
       - Label_DrugName:
           Control: Label
           Properties:
@@ -637,7 +628,7 @@ Screens:
             Text: ="2. 藥品名稱 (打字秒搜全院主檔) *"
             Width: =460
             X: =836
-            Y: =116
+            Y: =132
       - Combo_DrugName:
           Control: Classic/ComboBox
           Properties:
@@ -685,7 +676,7 @@ Screens:
             Size: =11
             Width: =460
             X: =836
-            Y: =138
+            Y: =154
       - Label_ScrapDate:
           Control: Label
           Properties:
@@ -698,7 +689,7 @@ Screens:
             Text: ="3. 報廢日期 *"
             Width: =460
             X: =346
-            Y: =182
+            Y: =198
       - Input_ScrapDate:
           Control: Classic/TextInput
           Properties:
@@ -727,7 +718,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =346
-            Y: =204
+            Y: =220
       - Label_Applicant:
           Control: Label
           Properties:
@@ -740,7 +731,7 @@ Screens:
             Text: ="4. 申請人 *"
             Width: =460
             X: =836
-            Y: =182
+            Y: =198
       - Label_Reviewer:
           Control: Label
           Properties:
@@ -753,7 +744,7 @@ Screens:
             Text: ="5. 複核人"
             Width: =460
             X: =346
-            Y: =248
+            Y: =264
       - Label_WarehouseReviewer:
           Control: Label
           Properties:
@@ -766,7 +757,7 @@ Screens:
             Text: ="6. 藥庫複核人員"
             Width: =460
             X: =836
-            Y: =248
+            Y: =264
       - Label_LotNumber:
           Control: Label
           Properties:
@@ -779,7 +770,7 @@ Screens:
             Text: ="7. 批號 (Lot Number) *"
             Width: =460
             X: =346
-            Y: =314
+            Y: =330
       - Input_LotNumber:
           Control: Classic/TextInput
           Properties:
@@ -806,7 +797,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =346
-            Y: =336
+            Y: =352
       - Label_Quantity:
           Control: Label
           Properties:
@@ -819,16 +810,14 @@ Screens:
             Text: ="8. 報廢數量 *"
             Width: =460
             X: =836
-            Y: =314
+            Y: =330
       - Input_Quantity:
           Control: Classic/TextInput
           Properties:
             BorderColor: =RGBA(138, 136, 134, 1)
             BorderThickness: =1
             Color: =RGBA(50, 49, 48, 1)
-            Default: |
-              =""
-              If(varIsNewMode, "", Text(varSelectedRecord.qty))
+            Default: =If(varIsNewMode, "", Text(varSelectedRecord.qty))
             DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
             DisabledColor: =ColorFade(Self.Color, 40%)
             DisabledFill: =Self.Fill
@@ -846,7 +835,7 @@ Screens:
             Size: =13.5
             Width: =460
             X: =836
-            Y: =336
+            Y: =352
       - Label_Reason:
           Control: Label
           Properties:
@@ -859,7 +848,7 @@ Screens:
             Text: ="9. 報廢原因 *"
             Width: =950
             X: =346
-            Y: =380
+            Y: =396
       - Combo_Reason:
           Control: Classic/ComboBox
           Properties:
@@ -899,7 +888,7 @@ Screens:
             Size: =11
             Width: =950
             X: =346
-            Y: =402
+            Y: =418
       - Label_Remarks:
           Control: Label
           Properties:
@@ -912,7 +901,7 @@ Screens:
             Text: ="10. 備註說明"
             Width: =950
             X: =346
-            Y: =446
+            Y: =462
       - Input_Remarks:
           Control: Classic/TextInput
           Properties:
@@ -939,7 +928,7 @@ Screens:
             RadiusTopRight: =4
             Width: =950
             X: =346
-            Y: =468
+            Y: =484
       - Label_Attachments:
           Control: Label
           Properties:
@@ -952,7 +941,7 @@ Screens:
             Text: ="11. 照片或簽核附件 (點擊上傳或拖曳憑據照片)"
             Width: =950
             X: =346
-            Y: =518
+            Y: =534
       - FooterRect:
           Control: Rectangle
           Properties:
@@ -1016,9 +1005,7 @@ Screens:
                     =Text(ThisItem.id)
 
                   VerticalAlign: =VerticalAlign.Top
-                  Width: |+
-                    =250
-
+                  Width: =140
                   X: =13
             - Subtitle1:
                 Control: Label
@@ -1079,6 +1066,28 @@ Screens:
                   Width: =250
                   X: =13
                   Y: =45
+            - Badge_Status:
+                Control: Label
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  Color: =Switch(Coalesce(ThisItem.status, ThisItem.審核狀態, "待審核"), "已核准", RGBA(21, 128, 61, 1), "已退件", RGBA(185, 28, 28, 1), RGBA(180, 83, 9, 1))
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  Fill: =Switch(Coalesce(ThisItem.status, ThisItem.審核狀態, "待審核"), "已核准", RGBA(220, 252, 231, 1), "已退件", RGBA(254, 226, 226, 1), RGBA(254, 243, 199, 1))
+                  FocusedBorderThickness: =4
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =24
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingTop: =0
+                  Size: =10
+                  Text: =Coalesce(ThisItem.status, ThisItem.審核狀態, "待審核")
+                  Width: =82
+                  X: =170
+                  Y: =8
       - ComboBox1:
           Control: Classic/ComboBox
           Properties:
@@ -1121,7 +1130,7 @@ Screens:
             SelectionFill: =RGBA(0, 120, 212, 1)
             Width: =460
             X: =836
-            Y: =204
+            Y: =220
       - ComboBox2:
           Control: Classic/ComboBox
           Properties:
@@ -1164,7 +1173,7 @@ Screens:
             SelectionFill: =RGBA(0, 120, 212, 1)
             Width: =460
             X: =346
-            Y: =270
+            Y: =286
       - Combo_WarehouseReviewer:
           Control: Classic/ComboBox
           Properties:
@@ -1176,6 +1185,8 @@ Screens:
             ChevronHoverBackground: =RGBA(245, 245, 245, 1)
             ChevronHoverFill: =RGBA(50, 49, 48, 1)
             Color: =RGBA(50, 49, 48, 1)
+            DefaultSelectedItems: |-
+              =If(varIsNewMode, Blank(), Filter(Table({EmpId: "980526", Name: "黃慧娟", DisplayText: "黃慧娟 (980526)"}, {EmpId: "A807W6", Name: "王詩涵", DisplayText: "王詩涵 (A807W6)"}), DisplayText = varSelectedRecord.warehouseReviewer || Name = varSelectedRecord.warehouseReviewer))
             DisabledBorderColor: =RGBA(0, 0, 0, 0)
             DisabledColor: =RGBA(161, 159, 157, 1)
             DisabledFill: =RGBA(242, 242, 241, 0)
@@ -1197,7 +1208,7 @@ Screens:
             SelectionFill: =RGBA(0, 120, 212, 1)
             Width: =460
             X: =836
-            Y: =270
+            Y: =286
       - Form_Attachment:
           Control: Form
           Variant: Classic
@@ -1207,11 +1218,11 @@ Screens:
             BorderThickness: =1
             DataSource: ='報廢網頁'
             DefaultMode: =FormMode.New
-            Height: =110
+            Height: =150
             Item: =Defaults('報廢網頁')
             Width: =950
             X: =346
-            Y: =540
+            Y: =556
           Children:
             - 附件_DataCard1:
                 Control: TypedDataCard
@@ -1224,7 +1235,7 @@ Screens:
                   DisplayName: =DataSourceInfo([@報廢網頁],DataSourceInfo.DisplayName,附件)
                   Required: =false
                   Update: =DataCardValue12.Attachments
-                  Width: =316
+                  Width: =950
                   X: =0
                   Y: =0
                 Children:
@@ -1245,6 +1256,7 @@ Screens:
                         Height: =34
                         PaddingLeft: =0
                         Text: =Parent.DisplayName
+                        Visible: =false
                         Width: =Parent.Width - 60
                         Wrap: =false
                         X: =30
@@ -1262,6 +1274,7 @@ Screens:
                         DisplayMode: =Parent.DisplayMode
                         Fill: =RGBA(245, 245, 245, 1)
                         Font: =Font.'Segoe UI'
+                        Height: =126
                         HoverColor: =RGBA(50, 49, 48, 1)
                         HoverFill: =RGBA(245, 245, 245, 1)
                         ItemColor: =RGBA(0, 0, 0, 1)
@@ -1278,9 +1291,9 @@ Screens:
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 120, 212, 1)
                         Tooltip: =Parent.DisplayName
-                        Width: =Parent.Width - 60
-                        X: =30
-                        Y: =DataCardKey12.Y + DataCardKey12.Height + 5
+                        Width: =Parent.Width - 24
+                        X: =12
+                        Y: =4
                   - ErrorMessage12:
                       Control: Label
                       MetadataKey: ErrorMessage
@@ -1327,3 +1340,53 @@ Screens:
                         Width: =30
                         Wrap: =false
                         Y: =DataCardKey12.Y
+      - Btn_RefreshHistory:
+          Control: Classic/Icon
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Color: =RGBA(0, 120, 212, 1)
+            DisabledBorderColor: =RGBA(245, 245, 245, 1)
+            DisabledColor: =RGBA(225, 223, 221, 1)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            Height: =32
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverColor: =RGBA(16, 110, 190, 1)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Icon: =Icon.Reload
+            OnSelect: =Refresh('報廢網頁'); ClearCollect(colHistoryRecords, AddColumns('報廢網頁', id, IfError(Value(報廢單號), 0), serialNo, 報廢單號, code, 藥品代碼, name, 藥品名稱, date, Text(報廢日期, "yyyy-mm-dd"), applicant, 申請人, reviewer, 複核人, warehouseReviewer, 藥庫複核人員, lot, 批號, qty, 報廢數量, reason, 報廢原因, remarks, 備註, status, 審核狀態)); Notify("報廢清單已與 SharePoint 雲端最新狀態同步！", NotificationType.Success)
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedColor: =RGBA(16, 110, 190, 1)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Width: =32
+            X: =235
+            Y: =76
+      - Btn_NewForm:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =RGBA(16, 124, 65, 1)
+            Color: =RGBA(16, 124, 65, 1)
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            DisabledFill: =RGBA(242, 242, 241, 0)
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =38
+            HoverBorderColor: =RGBA(16, 124, 65, 1)
+            HoverColor: =RGBA(16, 124, 65, 1)
+            HoverFill: =RGBA(232, 245, 237, 1)
+            OnSelect: |-
+              =Set(varIsNewMode, true); Set(varSelectedRecord, Blank()); UpdateContext({locDrugCode: Blank(), locDrugRecord: Blank()}); Reset(Input_DrugCode); Reset(Combo_DrugName); Reset(ComboBox1); Reset(ComboBox2); Reset(Combo_WarehouseReviewer); Reset(Input_LotNumber); Reset(Input_Quantity); Reset(Combo_Reason); Reset(Input_Remarks); ResetForm(Form_Attachment)
+            PressedBorderColor: =RGBA(0, 69, 120, 1)
+            PressedColor: =RGBA(16, 124, 65, 1)
+            PressedFill: =RGBA(209, 235, 219, 1)
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            Text: ="＋ 新增申請單"
+            Width: =224
+            X: =866
+            Y: =70

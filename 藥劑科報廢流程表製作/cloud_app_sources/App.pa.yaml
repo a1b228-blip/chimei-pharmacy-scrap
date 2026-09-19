@@ -31,15 +31,7 @@ App:
           { EmpId: "B505W2", Name: "方嘉苡", DisplayText: "方嘉苡 (B505W2)" },
           { EmpId: "B508W6", Name: "王郁萱", DisplayText: "王郁萱 (B508W6)" }
       );
-      ClearCollect(
-          colHistoryRecords,
-          Table(
-              { id: 1001, code: "10A000", name: "10A000 · ADI-PEG20 (40.25mg/V)針.恩慈", date: "2026-09-08", applicant: "江睿益 (B305W2)", reviewer: "陳藥師", warehouseReviewer: "林庫管", lot: "LOT-202608A", qty: 2, reason: "藥品過期", remarks: "病房常備藥品逾期退回", status: "主管已核准" },
-              { id: 1002, code: "39A019", name: "39A019 · Aminophylline(250mg)針", date: "2026-09-09", applicant: "江睿益 (B305W2)", reviewer: "黃藥師", warehouseReviewer: "王庫管", lot: "LOT-99881", qty: 5, reason: "包裝破損 / 變質", remarks: "外盒受潮破損，確保安全申請報廢", status: "主管已核准" },
-              { id: 1003, code: "56M015", name: "56M015 · Magvac(250ml)鎂福內服液", date: "2026-09-10", applicant: "江睿益 (B305W2)", reviewer: "李藥師", warehouseReviewer: "張庫管", lot: "MG-2025", qty: 12, reason: "冷藏失效 / 溫控異常", remarks: "溫控紀錄警報，依SOP整批送審報廢", status: "主管已核准" }
-          )
-      );
-      Set(varSelectedRecord, First(colHistoryRecords));
+      Refresh('報廢網頁'); ClearCollect(colHistoryRecords, AddColumns('報廢網頁', id, IfError(Value(報廢單號), 0), serialNo, 報廢單號, code, 藥品代碼, name, 藥品名稱, date, Text(報廢日期, "yyyy-mm-dd"), applicant, 申請人, reviewer, 複核人, warehouseReviewer, 藥庫複核人員, lot, 批號, qty, 報廢數量, reason, 報廢原因, remarks, 備註, status, 審核狀態)); Set(varSelectedRecord, First(colHistoryRecords));
       ClearCollect(
           colDrugMaster,
           Table(

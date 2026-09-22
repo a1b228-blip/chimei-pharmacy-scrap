@@ -1,0 +1,430 @@
+- mRoot:
+    Control: GroupContainer
+    Variant: AutoLayout
+    Properties:
+      X: =0
+      Y: =0
+      Width: =Parent.Width
+      Height: =Parent.Height
+      Fill: =RGBA(244, 246, 249, 1)
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =0
+    Children:
+      - mHeader:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =64
+            FillPortions: =0
+            AlignInContainer: =AlignInContainer.Stretch
+            Fill: =RGBA(11, 58, 94, 1)
+          Children:
+            - mHeaderTitle:
+                Control: Label
+                Properties:
+                  X: =16
+                  Y: =8
+                  Width: =Parent.Width - 32
+                  Height: =28
+                  Text: ="💊 藥品報廢申請"
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Bold
+                  Size: =16
+            - mHeaderSerial:
+                Control: Label
+                Properties:
+                  X: =16
+                  Y: =36
+                  Width: =Parent.Width - 32
+                  Height: =20
+                  Text: ="單號 " & Text(Today(), "yyyymmdd") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), "yyyy-mm-dd"))) + 1, "000") & "　·　佳里奇美醫院 藥劑科"
+                  Color: =RGBA(203, 220, 235, 1)
+                  Font: =Font.'Segoe UI'
+                  Size: =10.5
+      - mBody:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            FillPortions: =1
+            AlignInContainer: =AlignInContainer.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            LayoutGap: =4
+            PaddingTop: =8
+            PaddingBottom: =24
+            PaddingLeft: =16
+            PaddingRight: =16
+            Fill: =RGBA(244, 246, 249, 1)
+          Children:
+            - mLabel_DrugCode:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="1. 藥品代碼 (藥號) *"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mInput_DrugCode:
+                Control: Classic/TextInput
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Default: =locDrugCode
+                  HintText: ="輸入藥號 (如：10A000)"
+                  Font: =Font.'Segoe UI'
+                  Size: =13
+                  Color: =RGBA(2, 75, 125, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  OnChange: |-
+                    =If(
+                        !IsBlank(Self.Text),
+                        UpdateContext({ locDrugRecord: LookUp(DrugTable, Lower(藥號) = Lower(Trim(Self.Text))) });
+                        If(
+                            !IsBlank(locDrugRecord.藥品學名),
+                            UpdateContext({ locDrugCode: locDrugRecord.藥號 });
+                            Reset(mCombo_DrugName),
+                            Notify("查無此藥品代碼！", NotificationType.Warning)
+                        ),
+                        UpdateContext({ locDrugRecord: Blank(), locDrugCode: "" });
+                        Reset(mCombo_DrugName)
+                    )
+            - mLabel_DrugName:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="2. 藥品名稱 (打字搜尋) *"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mCombo_DrugName:
+                Control: Classic/ComboBox
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Items: =Sort(Filter(DrugTable, IsBlank(Self.SearchText) Or StartsWith(藥品學名, Self.SearchText)), 藥品學名, SortOrder.Ascending)
+                  DisplayFields: =["藥品學名"]
+                  SearchFields: =["藥品學名"]
+                  SelectMultiple: =false
+                  DefaultSelectedItems: =If(!IsBlank(locDrugRecord), [locDrugRecord], [])
+                  InputTextPlaceholder: ="輸入藥名關鍵字"
+                  OnChange: |-
+                    =UpdateContext({ locDrugRecord: Self.Selected, locDrugCode: Self.Selected.藥號 });
+                    Reset(mInput_DrugCode)
+                  Font: =Font.'Segoe UI'
+                  Size: =12
+                  Color: =RGBA(31, 41, 55, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+            - mLabel_LotNumber:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="3. 批號 (Lot Number) *"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mInput_LotNumber:
+                Control: Classic/TextInput
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Default: =""
+                  HintText: ="例如：EXP202611A"
+                  Font: =Font.'Segoe UI'
+                  Size: =13
+                  Color: =RGBA(50, 49, 48, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+            - mLabel_Quantity:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="4. 報廢數量 *"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mInput_Quantity:
+                Control: Classic/TextInput
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Default: =""
+                  Format: =TextFormat.Number
+                  HintText: ="請輸入正整數"
+                  Font: =Font.'Segoe UI'
+                  Size: =13
+                  Color: =RGBA(50, 49, 48, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+            - mLabel_ScrapDate:
+                Control: Label
+                Properties:
+                  Height: =44
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="5. 報廢日期　" & Text(Today(), "yyyy-mm-dd")
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mLabel_Applicant:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="6. 申請人 *"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mCombo_Applicant:
+                Control: Classic/ComboBox
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Items: =colPharmacists
+                  DisplayFields: =["DisplayText"]
+                  SearchFields: =["Name","EmpId","DisplayText"]
+                  SelectMultiple: =false
+                  DefaultSelectedItems: =Filter(colPharmacists, Name in User().FullName || EmpId in User().Email)
+                  InputTextPlaceholder: ="選擇或輸入姓名 / 員工編號"
+                  Font: =Font.'Segoe UI'
+                  Size: =12
+                  Color: =RGBA(50, 49, 48, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+            - mLabel_Reviewer:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="7. 複核人"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mCombo_Reviewer:
+                Control: Classic/ComboBox
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Items: =colPharmacists
+                  DisplayFields: =["DisplayText"]
+                  SearchFields: =["Name","EmpId","DisplayText"]
+                  SelectMultiple: =false
+                  InputTextPlaceholder: ="選擇或輸入姓名 / 員工編號"
+                  Font: =Font.'Segoe UI'
+                  Size: =12
+                  Color: =RGBA(50, 49, 48, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+            - mLabel_WarehouseReviewer:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="8. 藥庫複核人員"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mCombo_WarehouseReviewer:
+                Control: Classic/ComboBox
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Items: =Table({EmpId:"980526",Name:"黃慧娟",DisplayText:"黃慧娟 (980526)"},{EmpId:"A807W6",Name:"王詩涵",DisplayText:"王詩涵 (A807W6)"})
+                  DisplayFields: =["DisplayText"]
+                  SearchFields: =["DisplayText"]
+                  SelectMultiple: =false
+                  InputTextPlaceholder: ="選擇藥庫複核人員"
+                  Font: =Font.'Segoe UI'
+                  Size: =12
+                  Color: =RGBA(50, 49, 48, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+            - mLabel_Reason:
+                Control: Label
+                Properties:
+                  Height: =44
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="9. 報廢原因 *"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mCombo_Reason:
+                Control: Classic/ComboBox
+                Properties:
+                  Height: =46
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Items: =["藥品過期 (Expired)", "包裝破損 / 變質", "病患退藥無法再利用", "調配失誤報廢", "冷藏失效 / 溫控異常", "其他原因（請於備註說明）"]
+                  DisplayFields: =["Value"]
+                  SearchFields: =["Value"]
+                  IsSearchable: =false
+                  SelectMultiple: =false
+                  InputTextPlaceholder: ="請選擇報廢原因"
+                  Font: =Font.'Segoe UI'
+                  Size: =12
+                  Color: =RGBA(31, 41, 55, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+            - mLabel_Remarks:
+                Control: Label
+                Properties:
+                  Height: =30
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="10. 備註說明"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+            - mInput_Remarks:
+                Control: Classic/TextInput
+                Properties:
+                  Height: =84
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Mode: =TextMode.MultiLine
+                  Default: =""
+                  HintText: ="選填：報廢背景或特殊狀況"
+                  Font: =Font.'Segoe UI'
+                  Size: =13
+                  Color: =RGBA(50, 49, 48, 1)
+                  BorderColor: =RGBA(203, 213, 225, 1)
+                  BorderThickness: =1
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+            - mLabel_Attachments:
+                Control: Label
+                Properties:
+                  Height: =44
+                  FillPortions: =0
+                  AlignInContainer: =AlignInContainer.Stretch
+                  VerticalAlign: =VerticalAlign.Bottom
+                  Text: ="11. 照片或簽核附件（可直接拍照）"
+                  Color: =RGBA(51, 65, 85, 1)
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =12.5
+      - mFooter:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =72
+            FillPortions: =0
+            AlignInContainer: =AlignInContainer.Stretch
+            Fill: =RGBA(255, 255, 255, 1)
+            DropShadow: =DropShadow.Light
+          Children:
+            - mBtnSubmit:
+                Control: Classic/Button
+                Properties:
+                  X: =16
+                  Y: =12
+                  Width: =Parent.Width - 32
+                  Height: =48
+                  Text: ="送出審核"
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Bold
+                  Size: =14
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(16, 124, 65, 1)
+                  HoverFill: =RGBA(12, 100, 52, 1)
+                  PressedFill: =RGBA(10, 84, 44, 1)
+                  BorderThickness: =0
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  DisplayMode: =If(locSubmitting, DisplayMode.Disabled, DisplayMode.Edit)
+                  OnSelect: |-
+                    =If(
+                        IsBlank(mInput_DrugCode.Text) || IsBlank(mInput_LotNumber.Text) || IsBlank(mInput_Quantity.Text) || IsBlank(mCombo_Reason.Selected.Value),
+                        Notify("請完整填寫必填欄位（藥號、批號、數量、報廢原因）", NotificationType.Error),
+                        UpdateContext({
+                            locSubmitting: true,
+                            locSerial: Text(Today(), "yyyymmdd") & Text(CountRows(Filter(colHistoryRecords, date = Text(Today(), "yyyy-mm-dd"))) + 1, "000")
+                        });
+                        IfError(
+                            Patch(
+                                '報廢網頁',
+                                Defaults('報廢網頁'),
+                                {
+                                    報廢單號: locSerial,
+                                    藥品代碼: mInput_DrugCode.Text,
+                                    藥品名稱: Coalesce(mCombo_DrugName.Selected.藥品學名, locDrugRecord.藥品學名, mInput_DrugCode.Text),
+                                    報廢日期: Today(),
+                                    申請人: Coalesce(mCombo_Applicant.Selected.DisplayText, "未填寫"),
+                                    複核人: Coalesce(mCombo_Reviewer.Selected.DisplayText, "未填寫"),
+                                    藥庫複核人員: Coalesce(mCombo_WarehouseReviewer.Selected.DisplayText, "未填寫"),
+                                    批號: mInput_LotNumber.Text,
+                                    報廢數量: Value(mInput_Quantity.Text),
+                                    備註: mInput_Remarks.Text,
+                                    報廢原因: mCombo_Reason.Selected.Value,
+                                    審核狀態: "待審核"
+                                },
+                                mForm_Attachment.Updates
+                            ),
+                            Notify("送出失敗：" & FirstError.Message, NotificationType.Error),
+                            ResetForm(mForm_Attachment);
+                            Refresh('報廢網頁');
+                            ClearCollect(colHistoryRecords, AddColumns('報廢網頁', id, IfError(Value(報廢單號), 0), serialNo, 報廢單號, code, 藥品代碼, name, 藥品名稱, date, Text(報廢日期, "yyyy-mm-dd"), applicant, 申請人, reviewer, 複核人, warehouseReviewer, 藥庫複核人員, lot, 批號, qty, 報廢數量, reason, 報廢原因, remarks, 備註, status, 審核狀態));
+                            UpdateContext({ locDrugRecord: Blank(), locDrugCode: "" });
+                            Reset(mInput_DrugCode); Reset(mCombo_DrugName); Reset(mInput_LotNumber); Reset(mInput_Quantity);
+                            Reset(mCombo_Reviewer); Reset(mCombo_WarehouseReviewer); Reset(mCombo_Reason); Reset(mInput_Remarks);
+                            Notify("已送出審核！單號：" & locSerial, NotificationType.Success)
+                        );
+                        UpdateContext({ locSubmitting: false })
+                    )
